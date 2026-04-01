@@ -43,7 +43,12 @@ export default function AdsSlider() {
 
 
   return (
-    <main  className="grid grid-rows-[220px_220px_auto]  grid-cols-[2fr_1fr]  gap-4 my-5 px-[2%] ">
+    <main  className={`grid 
+      grid-rows-[200px] grid-cols-1
+      md:grid-rows-[140px_70px_auto] md:grid-cols-2
+      lg:grid-rows-[220px_auto] lg:grid-cols-[2fr_1fr]  
+      gap-4 my-5 px-[2%] 
+    `}>
       <section className="w-full row-span-2 col-start-1 row-start-1  overflow-hidden  rounded-2xl relative">
         
         <div className=" adsSlider flex gap-4 h-full overflow-x-auto snap-x snap-mandatory scroll-smooth " ref={sliderRef}>
@@ -51,7 +56,7 @@ export default function AdsSlider() {
           {ads.map(ad => (
             <div
               key={ad.id}
-              className="relative min-w-full h-full snap-start "
+              className="relative min-w-full h-full snap-start  overflow-hidden"
             >
               <Image
                 src={ad.img}
@@ -62,16 +67,16 @@ export default function AdsSlider() {
                 className="object-cover object-bottom z-0 rounded-xl "
                 priority
               />
-              <div className="max-w-[45%] flex flex-col gap-7 absolute  top-33 left-12.5 text-white">
-                <span className="uppercase">{ad.saleName}</span>
-                <h3 className="font-black text-3xl">{ad.title}</h3>
-                <p className="text-xs capitalize">{ad.description}</p>
-                <Link href={`/products/${ad.id}`} className="bg-blue-800 w-fit px-8 py-2 rounded-3xl capitalize ">shop now</Link>
+              <div className="max-w-[45%] h-full grid grid-rows-[auto_auto_1fr_auto] gap-y-2 sm:gap-7  pb-10 absolute  top-5 left-5 sm:left-12.5 text-white">
+                <span className="uppercase max-[333px]:text-[10px] ">{ad.saleName}</span>
+                <h3 className="font-black sm:text-3xl max-[333px]:text-xs ">{ad.title}</h3>
+                <p className="text-xs capitalize max-[333px]:text-[10px] ">{ad.description?.slice(0, 50)}...</p>
+                <Link href={`/products/${ad.id}`} className="bg-blue-800  px-8 py-2 rounded-3xl capitalize w-max max-[375px]:text-xs max-[375px]:px-3">shop now</Link>
               </div>
             </div>
           ))}
 
-          <div className="absolute bottom-5  left-1/2 -translate-x-1/2 z-10 flex gap-2" >
+          <div className="hidden sm:flex absolute bottom-5  left-1/2 -translate-x-1/2 z-10 gap-2" >
                 {ads.map((_, idx)=> <span key={idx} className={`h-2 w-2 bg-white rounded-[50%]`}></span>)}
           </div>
       </div>
@@ -79,7 +84,7 @@ export default function AdsSlider() {
 
       </section>
 
-      <section className=" row-span-2 col-start-2 row-start-1 flex flex-col gap-3">
+      <section className="hidden sm:flex row-span-2 col-start-2 row-start-1  flex-col gap-3">
         {topSale.map(product => (
           <div key={product.id} className="h-[50%] flex gap-2 nth-[1]:bg-[#d7ebf2] nth-[2]:bg-[#eae7de] rounded-2xl ">
             <div className="w-[70%] flex flex-col justify-between p-7">
@@ -93,7 +98,7 @@ export default function AdsSlider() {
         </div>))}
       </section>
 
-      <section className="row-start-3 col-span-2 flex flex-wrap gap-x-22.5 gap-y-10 px-[5%] my-10">
+      <section className="hidden sm:flex row-start-3 col-span-2  flex-wrap gap-x-22.5 gap-y-10 px-[5%] my-10">
           {advantages.map((item)=> 
           <div key={item.id} className="grid grid-rows-[22px_22px] grid-cols-[50px_auto] items-center gap-x1">
             <Image src={item.img} alt={item.title} width={40} height={40} className="row-span-2 "/>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mail, Phone, MapPin} from 'lucide-react'; // محتاج تثبت lucide-react أو استخدم أي icons تانية
-import { FaApple, FaFacebook, FaGooglePlay, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import { FaApple, FaCcMastercard, FaCcVisa, FaFacebook, FaGooglePlay, FaInstagram, FaLinkedinIn, FaPaypal } from 'react-icons/fa';
 import Link from 'next/link';
 
 const Footer = () => {
@@ -43,9 +43,9 @@ const Footer = () => {
               <Phone className="text-blue-600 shrink-0" size={20} />
               <span>(+099) 532-786-9843</span>
             </li>
-            <li className="flex items-center gap-3">
+            <li className="flex items-center gap-3 border">
               <Mail className="text-blue-600 shrink-0" size={20} />
-              <span>support@example.com</span>
+              <p className='overflow-x-auto'>support@example.com</p>
             </li>
           </ul>
           {/* Social Icons */}
@@ -106,14 +106,14 @@ const Footer = () => {
 
       {/* 3. Bottom Footer */}
       <div className="max-w-7xl mx-auto flex flex-col md:row items-center justify-between gap-6 text-sm">
-        <p>© 2026. All rights reserved by Pimjo.</p>
-        <div className="flex items-center gap-4 grayscale opacity-70">
-            <span className="text-xs mr-2">We Accept:</span>
+        <p>© 2026. All rights reserved by Tahaaa3.</p>
+        <div className="flex items-center gap-4 grayscale opacity-70 ">
+            <span className="text-xs mr-2 w-max">We Accept:</span>
             {/* استبدلهم بصور الدفع الحقيقية */}
-            <div className="flex gap-3 text-lg font-bold">
-                <span className="text-orange-500">MasterCard</span>
-                <span className="text-blue-800">VISA</span>
-                <span className="text-blue-500">PayPal</span>
+            <div className="flex flex-wrap gap-3 text-lg font-bold">
+                <FaPaypal />
+                <FaCcVisa />
+                <FaCcMastercard />
             </div>
         </div>
       </div>
