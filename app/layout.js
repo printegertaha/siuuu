@@ -7,6 +7,7 @@ import { AuthProvider } from "./_components/AuthProvider";
 import SavePrevPath from "./_components/SavePrevPath";
 import { AlertMsgProvider } from "./_context/AlertMsgContext";
 import AlertMsg from "./_components/AlertMsg";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Siuuu",
@@ -32,7 +33,9 @@ export default function RootLayout({ children }) {
             <ProgressBarProvider>
               <AlertMsg />
               <ProgressBar />
-              <SavePrevPath />
+              <Suspense callback={null}>
+                <SavePrevPath />
+              </Suspense>
             {children}
             </ProgressBarProvider>
           </AlertMsgProvider>
