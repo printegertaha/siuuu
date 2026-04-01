@@ -1,0 +1,200 @@
+"use client"
+import Link from 'next/link';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSession } from "next-auth/react";
+
+export default function Register () {
+  const [userData, setUserData] = useState({name: '', email: '', password: ''})
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const passwordRRef = useRef(null);
+
+  // auto focus on name input 
+  useEffect(()=>{
+    nameRef.current.focus();
+  }, [])
+
+
+
+const { data: session, status } = useSession();
+
+useEffect(()=>{
+
+  
+  if (status === "loading") console.log(' <p>جاري التحقق...</p>');
+  
+  if (session) {
+    console.log(` <p>أهلاً يا ${session.user.name}، رتبتك: ${session.user.role}</p>`);
+  }
+  else console.log('still loading')
+  
+},)
+
+
+
+
+
+
+
+
+
+
+
+  async function registerHandler (e) {
+    e.preventDefault()
+    setUserData({
+      name: nameRef.current.value, 
+      email: emailRef.current.value, 
+      password: passwordRef.current.value
+    })
+    if (emailRef.current.value > 1){
+      try{
+      const res = await fetch(`http://localhost:3001/api/register`, {
+        method: "POST",
+        headers:{
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: nameRef.current.value, 
+          email: emailRef.current.value, 
+          password: passwordRef.current.value
+        })
+      })
+
+      const data = await  res.json()
+      
+      console.log(data)
+      }
+      catch(err){
+        console.log(err)
+      }
+    }
+    
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  return (
+    // الحاوية الخارجية
+    <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center p-4 py-12">
+      
+      <div className="bg-white w-full max-w-[550px] rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#f1f1f1] p-8 md:p-12">
+        
+        <div className="text-center mb-8">
+          <h1 className="text-[#1a2b4b] text-3xl md:text-4xl font-bold mb-3">
+            Create New Account
+          </h1>
+          <p className="text-[#71717a] text-sm md:text-base">
+            Join us and start your journey today
+          </p>
+        </div>
+
+        <form className="space-y-4">
+          
+          <div className="space-y-1.5">
+            <label className="text-[#1a2b4b] font-semibold text-sm ml-1" htmlFor='fullname'>Full Name</label>
+            <input 
+              type="text" 
+              placeholder="ex- Taha Ebrahim Mahmoud"
+              className="w-full bg-[#f4f7fa] border-none rounded-2xl py-4 px-6 text-[#71717a] focus:ring-2 focus:ring-sky-600 outline-none transition-all placeholder:text-gray-400 mt-1.5"
+              id='fullname'
+              required
+              ref={nameRef}
+
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-[#1a2b4b] font-semibold text-sm ml-1" htmlFor='email'>Email</label>
+            <input 
+              type="email" 
+              placeholder="example@gmail.com"
+              className="w-full bg-[#f4f7fa] border-none rounded-2xl py-4 px-6 text-[#71717a] focus:ring-2 focus:ring-sky-600 outline-none transition-all placeholder:text-gray-400 mt-1.5"
+              id='email'
+              required
+              ref={emailRef}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-[#1a2b4b] font-semibold text-sm ml-1" htmlFor='password'>Password</label>
+            <input 
+              type="password" 
+              placeholder="Create a strong password"
+              className="w-full bg-[#f4f7fa] border-none rounded-2xl py-4 px-6 text-[#71717a] focus:ring-2 focus:ring-sky-600 outline-none transition-all placeholder:text-gray-400 mt-1.5"
+              id='password'
+              required
+              ref={passwordRef}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-[#1a2b4b] font-semibold text-sm ml-1" htmlFor='re-password'>Confirm Password</label>
+            <input 
+              type="password" 
+              placeholder="Retype your password"
+              className="w-full bg-[#f4f7fa] border-none rounded-2xl py-4 px-6 text-[#71717a] focus:ring-2 focus:ring-sky-600 outline-none transition-all placeholder:text-gray-400 mt-1.5"
+              id='re-password'
+              required
+              ref={passwordRRef}
+            />
+          </div>
+
+          <button 
+            type="submit"
+            className="w-full bg-[#1c2645] text-white font-bold py-4 rounded-2xl mt-6 transition-colors shadow-lg shadow-blue-900/10 cursor-pointer hover:bg-blue-800"
+            onClick={(e)=> registerHandler(e) }
+          >
+            Register
+          </button>
+        </form>
+
+        <div className="relative my-8 text-center">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-[#f1f1f1]"></div>
+          </div>
+          <span className="relative bg-white px-4 text-[#71717a] text-sm font-medium">or Register with</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <button className="flex items-center justify-center gap-2 bg-[#f4f7fa] py-4 rounded-2xl hover:bg-[#eceff3] transition-colors group border border-transparent hover:border-[#e2e8f0]">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="google" className="w-5 h-5" />
+            <span className="text-[#1a2b4b] font-semibold text-sm whitespace-nowrap">Google</span>
+          </button>
+
+          <button className="flex items-center justify-center gap-2 bg-[#f4f7fa] py-4 rounded-2xl hover:bg-[#eceff3] transition-colors group border border-transparent hover:border-[#e2e8f0]">
+            <img src="https://www.svgrepo.com/show/475654/github-color.svg" alt="github" className="w-5 h-5" />
+            <span className="text-[#1a2b4b] font-semibold text-sm whitespace-nowrap">Github</span>
+          </button>
+        </div>
+
+        <div className="text-center mt-10">
+          <p className="text-[#71717a] text-sm">
+            Already have an account? {' '}
+            <Link href='/login' className="text-blue-600 font-bold hover:underline">
+              Sign In Now!
+            </Link>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+

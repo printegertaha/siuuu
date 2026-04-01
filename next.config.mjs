@@ -1,7 +1,25 @@
-/** @type {import('next').NextConfig} */
+import path from 'path'
 const nextConfig = {
-  /* config options here */
   reactCompiler: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i.pinimg.com",
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
+      {
+        protocol: 'https',
+        hostname: 'demo.nextmerce.com'
+      },
+    ],
+  },
+    turbopack: {
+    root: path.resolve('./') ,
+  },
 };
 
 export default nextConfig;
