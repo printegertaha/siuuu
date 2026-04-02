@@ -1,9 +1,13 @@
 @import "tailwindcss";
-main section .adsSlider::-webkit-scrollbar{
-    display: none;
+@layer utilities{
+    .noScrollBar::-webkit-scrollbar{
+        display: none;
+    }
+    .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 }
-div section .categoriesSlider::-webkit-scrollbar{
-    display: none;
-    
-}
+
+
 

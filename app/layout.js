@@ -1,4 +1,3 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ProgressBarProvider from "./_context/ProgressBarCTX";
 import 'nprogress/nprogress.css';
