@@ -35,7 +35,8 @@ export default function Login () {
           setAlert({isVisible: true, message: 'succes login', isSuccess: true})
           setIsProgressBarVisible(true);
           runProgressBarTimeout = setTimeout(()=>{
-            router.replace(sessionStorage.getItem('prevPath') || '/')
+            router.replace(sessionStorage.getItem('prevPath') || '/');
+            // router.refresh();
           }, 500)
 
         }

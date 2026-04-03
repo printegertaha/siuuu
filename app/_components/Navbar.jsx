@@ -62,11 +62,11 @@ export default function Navbar() {
                 { userStatus === 'authenticated' 
                     ?
                     <div className='flex items-center gap-x-3'>
-                        <Link className='capitalize' href='/my-account'>{userInfo?.user?.name?.slice(0,5)}</Link>
+                        <Link prefetch={false} className='capitalize' href='/my-account'>{userInfo?.user?.name?.slice(0,5)}</Link>
                         <LogoutBtn textValue={<CiLogout className='text-blue-950' />}/>
                     </div>
                     :
-                    <Link href={pathname === '/login' ? '/register' : pathname === 'register' ? '/login': '/my-account'} className='hidden min-w-max  capitalize min-[350px]:block tracking-wide'>
+                    <Link prefetch={false} href={pathname === '/login' ? '/register' : pathname === 'register' ? '/login': '/my-account'} className='hidden min-w-max  capitalize min-[350px]:block tracking-wide'>
                         {pathname === '/login' ? 'register' : 'sign in'}
                     </Link>
                 }
