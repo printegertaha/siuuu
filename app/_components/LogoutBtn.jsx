@@ -5,18 +5,21 @@ import { useRouter } from 'next/navigation'
 import { useAlertMsg } from "../_context/AlertMsgContext";
 import { useEffect, useState } from "react";
 import { usePopUp } from "../_context/PopUpContext";
+import { useProgressBar } from "../_context/ProgressBarCTX";
 
 export default function LogoutBtn({textValue = 'Log out'}) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false); 
-  const { setAlert } = useAlertMsg();
-  const {popUp, setPopUp} = usePopUp()
+  const {  setAlert } = useAlertMsg();
+  const {popUp, setPopUp} = usePopUp();
+  const {setIsProgressBarVisible} = useProgressBar();
 
+  // دي داله بتشتغل لما نعمل تسجيل خروج وتأكيد لازم
   async function signOutHandler () {
       if (popUp.isContinue){
       try {
         setIsLoading(true);
-        // لازم await عشان ننتظر الرد من السيرفر
+
         await signOut({ redirect: false });
         
         setAlert({ isVisible: true, message: 'Success logout', isSuccess: true });
@@ -34,12 +37,16 @@ export default function LogoutBtn({textValue = 'Log out'}) {
     }
   }
 
-  useEffect(()=> {
+  // تشغيل دالة تسجيل الخروج عند تأكيد تسجيل الخروج فقط
+  useEffect( ()=> {
     if (popUp.isContinue, popUp.target === 'logout'){
-      signOutHandler()
+      signOutHandler();
+      setIsProgressBarVisible(true);
+      console.log('lets logout')
     }
   }, [popUp.isContinue, popUp.target])
 
+  // اظهار رساله لتأكيد تسجيل الخروج
   async function logoutHandler() {
     if (isLoading) return;
     setPopUp({
