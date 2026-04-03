@@ -1,56 +1,64 @@
 "use client"
+import { useAlertMsg } from '@/app/_context/AlertMsgContext';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import React, { useEffect, useRef, useState } from 'react';
-import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
+import { status } from 'nprogress';
+import React, { useEffect, useRef } from 'react';
+
 
 export default function Register () {
-  const [userData, setUserData] = useState({name: '', email: '', password: ''})
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const passwordRRef = useRef(null);
 
-  // auto focus on name input 
-  useEffect(()=>{
-    nameRef.current.focus();
-  }, [])
+  const router = useRouter();
+
+  const {setAlert} = useAlertMsg()
+
+  const nameRegex = /^[a-zA-Z\u0600-\u06FF\s]{1,}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 
+  function isValid(){
 
-const { data: session, status } = useSession();
+    const name = nameRef.current.value.trim();
+    const email = emailRef.current.value.trim();
+    const password = passwordRef.current.value;
+    const confirmPassword = passwordRRef.current.value;
 
-useEffect(()=>{
+    const isNameValid = nameRegex.test(name);
+    const isEmailValid = emailRegex.test(email);
+    const isPasswordValid = password.length >= 8
+    const doPasswordsMatch = password === confirmPassword && password !== "";
 
-  
-  if (status === "loading") console.log(' <p>جاري التحقق...</p>');
-  
-  if (session) {
-    console.log(` <p>أهلاً يا ${session.user.name}، رتبتك: ${session.user.role}</p>`);
+
+    if (isNameValid && isEmailValid && isPasswordValid && doPasswordsMatch) {
+      return true
+    } else {
+      if      (!isNameValid) setAlert({isVisible: true, isSuccess: false, message:"الاسم غير صالح"});
+      else if (!isEmailValid) setAlert({isVisible: true, isSuccess: false, message:"الإيميل غير صالح"});
+      else if (!isPasswordValid) setAlert({isVisible: true, isSuccess: false, message:"كلمة المرور ضعيفة"});
+      else if (!doPasswordsMatch) setAlert({isVisible: true, isSuccess: false, message:"كلمات المرور غير متطابقة"});
+      return false;
+    }
+
   }
-  else console.log('still loading')
-  
-},)
 
 
 
 
-
-
-
-
-
-
-
+  // Submit Handler
   async function registerHandler (e) {
-    e.preventDefault()
-    setUserData({
-      name: nameRef.current.value, 
-      email: emailRef.current.value, 
-      password: passwordRef.current.value
-    })
-    if (emailRef.current.value > 1){
+    e.preventDefault();
+
+// لو البيانات المكتوبه تمام
+    if (isValid()){
+
+// لو نجح مجرد ارسال طلب لانشاء الحساب
       try{
-      const res = await fetch(`http://localhost:3001/api/register`, {
+      const res = await fetch(`http://localhost:3000/api/register`, {
         method: "POST",
         headers:{
           "Content-Type": "application/json",
@@ -62,31 +70,48 @@ useEffect(()=>{
         })
       })
 
-      const data = await  res.json()
-      
-      console.log(data)
+// الرد على طلب انشاء الحساب
+      const data = await res.json();
+
+// لو نجح انشاء الحساب
+      if (data.status === 201){
+
+// نبعت طلب تسجيل دخول 
+        const loginRes = await signIn('credentials', {
+          email: emailRef.current.value,
+          password: passwordRef.current.value,
+          redirect: false
+        })
+
+// لو نحج تسجيل الدخول
+        if(loginRes.ok){
+          setAlert({isVisible: true, message: 'success register', isSuccess: true });
+          router.replace(sessionStorage.getItem('prevPath' || '/'));
+        }
+
+// لو منجحش تسجيل الدخول 
+        else{
+          setAlert({isVisible: true, message: 'success register but login failed', isSuccess: false })
+          router.replace('/login');
+        }
+
+// لو منجحش انشاء الحساب 
+      } else setAlert({isVisible: true, message: data.message, isSuccess: false});
       }
+// لو منجحش مجرد ارسال طلب لانشاء الحساب
       catch(err){
         console.log(err)
+        setAlert({isVisible: true, message: 'network err try again', isSuccess: false})
       }
     }
     
-  }
+  } 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // auto focus on name input 
+  useEffect(()=>{
+    nameRef.current.focus();
+  }, []);
 
 
   return (
@@ -172,12 +197,12 @@ useEffect(()=>{
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <button className="flex items-center justify-center gap-2 bg-[#f4f7fa] py-4 rounded-2xl hover:bg-[#eceff3] transition-colors group border border-transparent hover:border-[#e2e8f0]">
+          <button className="cursor-not-allowed flex items-center justify-center gap-2 bg-[#f4f7fa] py-4 rounded-2xl hover:bg-[#eceff3] transition-colors group border border-transparent hover:border-[#e2e8f0]">
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="google" className="w-5 h-5" />
             <span className="text-[#1a2b4b] font-semibold text-sm whitespace-nowrap">Google</span>
           </button>
 
-          <button className="flex items-center justify-center gap-2 bg-[#f4f7fa] py-4 rounded-2xl hover:bg-[#eceff3] transition-colors group border border-transparent hover:border-[#e2e8f0]">
+          <button className="cursor-not-allowed flex items-center justify-center gap-2 bg-[#f4f7fa] py-4 rounded-2xl hover:bg-[#eceff3] transition-colors group border border-transparent hover:border-[#e2e8f0]">
             <img src="https://www.svgrepo.com/show/475654/github-color.svg" alt="github" className="w-5 h-5" />
             <span className="text-[#1a2b4b] font-semibold text-sm whitespace-nowrap">Github</span>
           </button>

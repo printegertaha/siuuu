@@ -8,7 +8,7 @@ export default function SavePrevPath() {
   const searchParams = useSearchParams();
   
   useEffect(()=> {
-    if( !(pathname.includes('register') || pathname.includes('login')) ){
+    if( !(pathname.includes('register') || pathname.includes('login') || pathname.includes('my-account')) ){
       const readySearchParams = searchParams.toString()
       const fullPath = readySearchParams ? `${pathname}?${readySearchParams}` : pathname;
       sessionStorage.setItem('prevPath', fullPath);

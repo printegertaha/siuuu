@@ -39,12 +39,12 @@ export default function AdsSlider() {
     return ()=> clearInterval(sliderInterval)
   }, [])
 
-
+   
 
 
   return (
     <main  className={`grid 
-      grid-rows-[200px] grid-cols-1
+      grid-rows-[220px] grid-cols-1
       sm:grid-rows-[250px_200px_auto] sm:grid-cols-2
       md:grid-rows-[250px_200px_auto] md:grid-cols-2
       lg:grid-rows-[300px_auto] lg:grid-cols-[2fr_1fr]

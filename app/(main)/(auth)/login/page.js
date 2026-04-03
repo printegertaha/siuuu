@@ -72,16 +72,16 @@ export default function Login () {
 
 
   return (
-    <div className={`min-h-screen bg-[#f8f9fa] flex items-center justify-center p-4 relative ${isLoading && 'opacity-50 ' }`} >
+    <div className={` bg-[#f8f9fa] flex justify-center p-4  py-8 relative ${isLoading && 'opacity-50 ' }`} >
       
-      <div className="bg-white w-full max-w-137.5 rounded-4xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#f1f1f1] p-8 md:p-12">
+      <div className="bg-white max-w-[80vw] xl:max-w-[70vw] 2xl:max-w-[50vw] rounded-4xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#f1f1f1] p-8 md:p-12">
         
         <div className="text-center mb-10">
-          <h1 className="text-[#1a2b4b] text-3xl md:text-4xl font-bold mb-3">
+          <h2 className="text-[#1a2b4b] text-xl font-black md:text-3xl lg:text-4xl xl:text-5xl mb-3">
             Sign In to Your Account
-          </h1>
+          </h2>
 
-          <p className="text-[#71717a] text-sm md:text-base">
+          <p className="text-[#71717a] text-sm md:text-xl lg:text-2xl xl:text-3xl">
             Enter your detail below
           </p>
         </div>
@@ -145,12 +145,12 @@ export default function Login () {
         </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <button  className="flex items-center justify-center gap-2 bg-[#f4f7fa] py-4 rounded-2xl hover:bg-[#eceff3] transition-colors group border border-transparent hover:border-[#e2e8f0]">
+          <button  className="cursor-not-allowed flex items-center justify-center gap-2 bg-[#f4f7fa] py-4 rounded-2xl hover:bg-[#eceff3] transition-colors group border border-transparent hover:border-[#e2e8f0]">
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="google" className="w-5 h-5" />
             <span className="text-[#1a2b4b] font-semibold text-sm whitespace-nowrap">Google</span>
           </button>
 
-          <button className="flex items-center justify-center gap-2 bg-[#f4f7fa] py-4 rounded-2xl hover:bg-[#eceff3] transition-colors group border border-transparent hover:border-[#e2e8f0]">
+          <button className="cursor-not-allowed flex items-center justify-center gap-2 bg-[#f4f7fa] py-4 rounded-2xl hover:bg-[#eceff3] transition-colors group border border-transparent hover:border-[#e2e8f0]">
             <img src="https://www.svgrepo.com/show/475654/github-color.svg" alt="github" className="w-5 h-5" />
             <span className="text-[#1a2b4b] font-semibold text-sm whitespace-nowrap">Github</span>
           </button>

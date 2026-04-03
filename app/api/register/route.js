@@ -17,7 +17,7 @@ export async function POST(req) {
     const userExists = await User.findOne({ email }).select("_id");
     if (userExists) {
       return NextResponse.json(
-        { message: "هذا الإيميل مسجل بالفعل!" },
+        { message: "هذا الإيميل مسجل بالفعل" , status: 400},
         { status: 400 }
       );
     }
@@ -25,7 +25,7 @@ export async function POST(req) {
     // 4. إنشاء المستخدم الجديد (الصلاحية ستكون user تلقائياً كما حددنا في الموديل)
     const userData = await User.create({ name, email, password: hashedPassword });
 
-    return NextResponse.json({data: userData, message: "تم تسجيل المستخدم بنجاح" }, { status: 201 });
+    return NextResponse.json({data: userData, message: "تم تسجيل المستخدم بنجاح", status: 201 }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
       { message: "حدث خطأ أثناء التسجيل" },

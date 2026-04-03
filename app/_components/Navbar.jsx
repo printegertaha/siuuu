@@ -2,15 +2,16 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaRegHeart } from "react-icons/fa";
-import { RiShoppingBag2Line } from "react-icons/ri";
+import {  RiShoppingBag2Line } from "react-icons/ri";
 import { FaBars } from "react-icons/fa6";
-import { CiSearch } from "react-icons/ci";
+import { CiLogout, CiSearch } from "react-icons/ci";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useState } from 'react';
 import { CategoriesData } from '../data';
 import { IoIosArrowUp } from "react-icons/io";
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import LogoutBtn from './LogoutBtn';
 
 
 
@@ -19,7 +20,8 @@ export default function Navbar() {
     const  [categoryValue, setCategoryValue] = useState('All Categories')
     const pathname = usePathname();
     const categorySelected = pathname.split('/')[2] || 'All Categories';
-    const {data: userInfo, status: userStatus} = useSession()
+    const { data: userInfo, status: userStatus} = useSession()
+
 
 
   return (
@@ -57,10 +59,17 @@ export default function Navbar() {
             {/* 3 */}
             <section className='flex gap-4 items-center justify-end   '>
                 
-                <Link href='/login' className='hidden min-[350px]:grid grid-rows-1 grid-cols-[30px_1fr] items-center gap-y-0 gap-x-3'>
-                    {userStatus === 'unauthenticated' && <span className='capitalize text-[14px] w-max'>sign in</span> }
-                    
-                </Link>
+                { userStatus === 'authenticated' 
+                    ?
+                    <div className='flex items-center gap-x-3'>
+                        <Link className='capitalize' href='/my-account'>{userInfo?.user?.name?.slice(0,5)}</Link>
+                        <LogoutBtn textValue={<CiLogout className='text-blue-950' />}/>
+                    </div>
+                    :
+                    <Link href={pathname === '/login' ? '/register' : pathname === 'register' ? '/login': '/my-account'} className='hidden min-w-max  capitalize min-[350px]:block tracking-wide'>
+                        {pathname === '/login' ? 'register' : 'sign in'}
+                    </Link>
+                }
                 
                 <div className='relative ml-2 max-[200px]:hidden'>
                     <FaRegHeart className='text-md sm:text-2xl ' />

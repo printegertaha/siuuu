@@ -5,7 +5,7 @@ import { FaThreads } from 'react-icons/fa6';
 
 export default function Footer () {
   return (
-    <footer className=" pt-16 mb-0 px-[5%]  font-sans mx-[2%] mt-3 rounded-2xl">
+    <footer className=" mb-0 px-[5%]  font-sans mx-[2%] mt-3 rounded-2xl">
  
       <div className="  text-gray-600 mb-10">
         
