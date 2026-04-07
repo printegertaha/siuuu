@@ -6,8 +6,9 @@ import { useAlertMsg } from "../_context/AlertMsgContext";
 import { useEffect, useState } from "react";
 import { usePopUp } from "../_context/PopUpContext";
 import { useProgressBar } from "../_context/ProgressBarCTX";
+import { Power } from "lucide-react";
 
-export default function LogoutBtn({textValue = 'Log out'}) {
+export default function LogoutBtn({textValue=true, iconValue=true}) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false); 
   const {  setAlert } = useAlertMsg();
@@ -22,11 +23,10 @@ export default function LogoutBtn({textValue = 'Log out'}) {
 
         await signOut({ redirect: false });
         
-        setAlert({ isVisible: true, message: 'Success logout', isSuccess: true });
-        
-        // بنعمل refresh الأول عشان نحدث حالة الـ Session في كل المكونات
         router.refresh();
-        router.replace('/');
+        setTimeout(()=>{
+          router.replace('/');
+        },100)
         
       } catch (err) {
         setAlert({ isVisible: true, isSuccess: false, message: err.message });
@@ -38,12 +38,14 @@ export default function LogoutBtn({textValue = 'Log out'}) {
   }
 
   // تشغيل دالة تسجيل الخروج عند تأكيد تسجيل الخروج فقط
-  useEffect( ()=> {
-    if (popUp.isContinue, popUp.target === 'logout'){
-      signOutHandler();
-      setIsProgressBarVisible(true);
-      console.log('lets logout')
+  useEffect(()=> {
+    async function handleLogout () {
+      if (popUp.isContinue && popUp.target === 'logout'){
+        console.log(popUp)
+        await signOutHandler();
+      }
     }
+    handleLogout();
   }, [popUp.isContinue, popUp.target])
 
   // اظهار رساله لتأكيد تسجيل الخروج
@@ -59,12 +61,18 @@ export default function LogoutBtn({textValue = 'Log out'}) {
   }
 
   return (
-    <button 
-      className={`text-red-500 ${isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`} 
-      disabled={isLoading} 
-      onClick={logoutHandler} 
-    >
-      {isLoading ? 'Logging out...' : textValue}
-    </button>
+  <button 
+    className={`text-red-600 transition-all ${iconValue && textValue ? 'flex gap-2 items-center w-full' : ''} ${isLoading ? 'opacity-50 cursor-wait text-red-950' : 'cursor-pointer hover:text-red-700'}`} 
+    disabled={isLoading}
+    onClick={logoutHandler} 
+  >
+    {iconValue && (
+      <Power className={`${isLoading ? "opacity-70" : ""} text-black w-4 h-4`} /> 
+    )}
+
+    {textValue && (
+      <span>{isLoading ? 'Logging out...' : 'Logout'}</span>
+    )}
+  </button>
   )
 }

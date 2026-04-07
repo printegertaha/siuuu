@@ -3,7 +3,6 @@ import { useAlertMsg } from '@/app/_context/AlertMsgContext';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { status } from 'nprogress';
 import React, { useEffect, useRef } from 'react';
 
 
@@ -85,8 +84,8 @@ export default function Register () {
 
 // لو نحج تسجيل الدخول
         if(loginRes.ok){
-          setAlert({isVisible: true, message: 'success register', isSuccess: true });
           router.replace(sessionStorage.getItem('prevPath' || '/'));
+          router.refresh();
         }
 
 // لو منجحش تسجيل الدخول 

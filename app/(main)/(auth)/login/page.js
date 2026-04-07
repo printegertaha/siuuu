@@ -3,7 +3,7 @@ import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import {  useRouter } from 'next/navigation';
 import React, {  useEffect, useRef, useState } from 'react';
-import { Eye, Loader2 } from 'lucide-react';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { useProgressBar } from '@/app/_context/ProgressBarCTX';
 import { useAlertMsg } from '@/app/_context/AlertMsgContext';
 
@@ -31,13 +31,12 @@ export default function Login () {
           password: passwordRef.current.value,
           redirect: false
         })
-        if (res.ok){ 
-          setAlert({isVisible: true, message: 'succes login', isSuccess: true})
+        if (res.ok){
           setIsProgressBarVisible(true);
           runProgressBarTimeout = setTimeout(()=>{
             router.replace(sessionStorage.getItem('prevPath') || '/');
-            // router.refresh();
-          }, 500)
+            router.refresh();
+          }, 100)
 
         }
         // هنا اي حاله غير النجاح هتتنفذ
@@ -112,7 +111,7 @@ export default function Login () {
               />
               {/* زرار العين هيتقفل تلقائياً برضه لأنه جوه الـ fieldset */}
               <button type='button' className='absolute top-[50%] right-4 cursor-pointer disabled:cursor-not-allowed' onClick={()=> setShowPassword(prev => !prev) }>
-                <Eye />
+                {showPassord ? <Eye /> : <EyeOff /> }
               </button>
             </div>
 
