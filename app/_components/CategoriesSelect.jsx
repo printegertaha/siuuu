@@ -26,7 +26,7 @@ export default function CategoriesSelect({
   //   Get Categories From Serve
   useEffect(() => {
     async function getCategories() {
-      const res = await fetch("http://localhost:3000/api/categories");
+      const res = await fetch("/api/categories");
       const resData = await res.json();
       if (res.ok) {
         setCategoriesData(resData.data);

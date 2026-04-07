@@ -12,7 +12,7 @@ export default function CategoriesPage() {
   const [loading, setLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
 
-  const API_URL = "http://localhost:3001/api/categories";
+  const API_URL = "/api/categories";
 
 
   async function fetchCategories ()  {

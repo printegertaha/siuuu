@@ -48,7 +48,7 @@ export default function CreateProduct() {
       gellary.slice(1).forEach((img) => formData.append("images", img));
 
       try {
-        const res = await fetch("http://localhost:3000/api/products", {
+        const res = await fetch("/api/products", {
           method: "POST",
           body: formData,
         });

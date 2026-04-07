@@ -6,7 +6,7 @@ import { PencilIcon, Trash } from "lucide-react";
 import { useAlertMsg } from "@/app/_context/AlertMsgContext";
 
 export default function MyProducts() {
-  const apiEndPoint = "http://localhost:3000/api/user/my-products";
+  const apiEndPoint = "/api/user/my-products";
 
   const { popUp, setPopUp } = usePopUp();
   const [userProducts, setUserProducts] = useState([]);
@@ -39,7 +39,7 @@ export default function MyProducts() {
     setIsDeleting(true);
     try {
       const res = await fetch(
-        `http://localhost:3000/api/products/${product._id}`,
+        `/api/products/${product._id}`,
         { method: "DELETE" },
       );
       if (res.ok) {
