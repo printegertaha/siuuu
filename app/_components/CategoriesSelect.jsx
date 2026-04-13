@@ -5,35 +5,26 @@ import { useEffect, useRef, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import Link from "next/link";
+import useCategories from "./FetchCategories";
 
 export default function CategoriesSelect({
   mode = "categoryNavigate",
   updateCategoryInFormSelect,
 }) {
+  
+  const {categories, isLoading} = useCategories();
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [categoriesData, setCategoriesData] = useState([]);
   const [categorySelected, setCategorySelected] = useState(
     mode === "categoryNavigate" ? "All Categories" : "Select Category",
   );
   const pathname = usePathname();
   const selectBoxRef = useRef(null);
+
   //   لو هوا في صفحة كاتيجوريز بنجيبه من الرابط عشان لو عمل ريلود بيرجع لأصله في الاستيت
   const categoryFromURL = pathname
     .split("/")[2]
     ?.replaceAll("--", " & ")
     .replaceAll("-", " ");
-
-  //   Get Categories From Serve
-  useEffect(() => {
-    async function getCategories() {
-      const res = await fetch("/api/categories");
-      const resData = await res.json();
-      if (res.ok) {
-        setCategoriesData(resData.data);
-      }
-    }
-    getCategories();
-  }, []);
 
   //   Handle Click Outside To Close
   useEffect(() => {
@@ -49,7 +40,7 @@ export default function CategoriesSelect({
 
   return (
     <div
-      className={`categoriesSelect relative w-full  ${mode === 'categoryNavigate' && 'hidden min-[915px]:grid'} grid grid-cols-[20px_1fr_10px] items-center gap-1 bg-gray-100 px-3 py-1.5 rounded-2xl cursor-pointer z-2`}
+      className={`categoriesSelect relative w-full  ${mode === "categoryNavigate" && "hidden min-[915px]:grid"} grid grid-cols-[20px_1fr_10px] items-center gap-1 bg-gray-100 px-3 py-1.5 rounded-2xl cursor-pointer z-2`}
       onClick={() => setIsCategoryOpen((pre) => !pre)}
       ref={selectBoxRef}
     >
@@ -63,15 +54,14 @@ export default function CategoriesSelect({
         {isCategoryOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
       </span>
       {isCategoryOpen && (
-        <ul
-          className="absolute top-10 w-full  rounded-2xl  bg-gray-50 shadow "
-        >
-          {categoriesData.map((category) => (
+        <ul className="absolute top-10 w-full  rounded-2xl  bg-gray-50 shadow ">
+          {categories.map((category) => (
             <li
               key={category._id}
               onClick={() => {
                 setCategorySelected(category.nickName);
-                mode === 'categorySelect' && updateCategoryInFormSelect(category.name);
+                mode === "categorySelect" &&
+                  updateCategoryInFormSelect(category.name);
               }}
               className={`rounded-md w-full bg-gray-50 hover:text-[blue]  ${categorySelected === category.nickName && "bg-gray-300"} ${mode === "categorySelect" && "block px-3 py-1.5"}`}
             >

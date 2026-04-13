@@ -43,9 +43,9 @@ export async function DELETE(_, { params }) {
 export async function PUT (request, {params}){
     try{
     const {id} = await params;
-    const {name, nickName} = await request.json();
+    const {name, nickName, image} = await request.json();
     await connectDB();
-    const category = await Categories.findByIdAndUpdate(id, {name, nickName}, {new: true, runValidators: true});
+    const category = await Categories.findByIdAndUpdate(id, {name, nickName, image}, {new: true, runValidators: true});
     return NextResponse.json({data: category, message: "category is ready."}, {status: 200})
     }catch(err){
         return NextResponse.json({message: "failed to get category"}, {status: 500})

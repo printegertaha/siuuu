@@ -227,7 +227,7 @@ export default function CreateProduct() {
           <button
             type="submit"
             className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-md transition-all active:scale-[0.98] mt-4 ${isCreating && "cursor-wait"}`}
-            disabled={isCreating}
+            disabled={false}
           >
             {isCreating ? "Creating.." : "Create"}
           </button>

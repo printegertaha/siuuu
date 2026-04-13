@@ -34,13 +34,13 @@ export default function Navbar() {
         <section className="hidden gap-5 items-center sm:flex ">
           <CategoriesSelect />
           {/*         Search                                              */}
-          <div className="relative  border rounded-3xl w-full">
+          <div className="relative border-2 rounded-3xl w-full">
             <input
               type="text"
               placeholder="search..."
               className="rounded-3xl px-2 py-1 "
             />
-            <CiSearch className="absolute right-2 top-[50%] translate-y-[-50%]" />
+            <CiSearch className="absolute  right-2 top-[50%] translate-y-[-50%]" />
           </div>
         </section>
 
