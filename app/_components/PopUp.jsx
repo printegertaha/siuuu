@@ -9,7 +9,7 @@ export default function PopUp() {
 
   return (
     <div 
-      className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/30 backdrop-blur-sm p-2" 
+      className="fixed inset-0 z-[999123] flex items-center justify-center bg-black/30 backdrop-blur-sm p-2" 
       onClick={() => setPopUp({ ...popUp, isVisible: false })}
     >
       {/* - max-h-[90vh]: لضمان عدم خروج النافذة عن الشاشة طولياً
@@ -51,7 +51,7 @@ export default function PopUp() {
           <button  
             onClick={() => setPopUp({isVisible: false, isContinue: true, ask: '', askDtls: '', target: 'logout'})} 
             type="button" 
-            className="flex-1 sm:flex-none min-w-[60px] justify-center rounded-lg bg-blue-600 px-3 py-2 sm:px-6 sm:py-2.5 text-[10px] sm:text-xs font-medium text-white hover:bg-blue-700 transition-all shadow-sm"
+            className="flex-1 sm:flex-none min-w-[60px] justify-center rounded-lg bg-blue-600 px-3 py-2 sm:px-6 sm:py-2.5 text-[10px] sm:text-xs font-medium text-white hover:bg-blue-700 transition-all shadow-sm cursor-pointer"
           >
             Continue
           </button>

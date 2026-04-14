@@ -32,7 +32,8 @@ export default function LogoutBtn({textValue=true, iconValue=true}) {
         setAlert({ isVisible: true, isSuccess: false, message: err.message });
         setIsLoading(false); // بنرجع الزرار يشتغل تاني لو حصل خطأ عشان يحاول مرة تانية
       } finally {
-        setPopUp({isVisible: false, target: '', isContinue: false, ask: '', answer: ''})
+        setPopUp({isVisible: false, target: '', isContinue: false, ask: '', answer: ''});
+        setIsLoading(false)
       }
     }
   }
@@ -62,12 +63,12 @@ export default function LogoutBtn({textValue=true, iconValue=true}) {
 
   return (
   <button 
-    className={`text-red-600 transition-all ${iconValue && textValue ? 'flex gap-2 items-center w-full' : ''} ${isLoading ? 'opacity-50 cursor-wait text-red-950' : 'cursor-pointer hover:text-red-700'}`} 
+    className={`text-red-600 transition-all ${iconValue && textValue ? 'flex gap-2 items-center ' : ''} ${isLoading ? 'opacity-50 cursor-wait text-red-950' : 'cursor-pointer hover:text-red-700'}`} 
     disabled={isLoading}
     onClick={logoutHandler} 
   >
     {iconValue && (
-      <Power className={`${isLoading ? "opacity-70" : ""} text-black w-4 h-4`} /> 
+      <Power className={`${isLoading ? "opacity-70" : ""}  w-4 h-4 text-red-600`} /> 
     )}
 
     {textValue && (

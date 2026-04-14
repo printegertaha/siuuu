@@ -11,7 +11,7 @@ export default function PathLink() {
   const breadcrumbSteps = [
     { label: "My Account", href: "/my-account" },
     { label: "My Products", href: "/my-account/my-products" },
-    { label: "Create Product", href: "/my-account/my-products/create-product" },
+    { label: "Create Product", href: "/create-product" },
   ]
 
   return (

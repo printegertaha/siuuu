@@ -108,7 +108,7 @@ export default function MyProducts() {
                 </div>
 
                 {/* 2. Side Content: Slider & Data Row */}
-                <div className="flex flex-col flex-grow w-full">
+                <div className="flex flex-col grow w-full">
                   {/* Images Gallery Slider */}
                   <div className="flex flex-col gap-1.5 mb-3">
                     <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
@@ -116,7 +116,7 @@ export default function MyProducts() {
                     </span>
                     <div className="flex gap-2 overflow-x-auto no-scrollbar p-2">
                       {product.images.map((img, index) => (
-                        <div key={index} className="relative flex-shrink-0">
+                        <div key={index} className="relative shrink-0">
                           <img
                             src={img}
                             className="w-12 h-12 md:w-14 md:h-14 rounded-xl object-cover border-2 border-transparent hover:border-blue-500 transition-all cursor-pointer shadow-sm hover:scale-105"

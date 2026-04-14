@@ -7,4 +7,46 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+  .mini-scrollbar::-webkit-scrollbar {
+    background: #c8c8c8;
+    height: 3px;
+    border-radius: 10px;
+  }
+  .mini-scrollbar::-webkit-scrollbar-thumb {
+    background: #000000; /* لون الجزء المتحرك */
+    border-radius: 10px; /* حواف دائرية */
+    height: 15px;
+    cursor: default;
+  }
+  .md-scrollbar::-webkit-scrollbar {
+    background: #c8c8c8;
+    height: 3px;
+    width: 8px;
+    border-radius: 10px;
+  }
+  .md-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(#0280ff, #57c8d9); /* لون الجزء المتحرك */
+
+    border-radius: 4px;
+    cursor: default;
+  }
+}
+
+/* 1. تحديد عرض شريط التمرير */
+html::-webkit-scrollbar {
+  width: 10px; /* عرض السكرول بار الرأسي */
+}
+
+/* 2. ستايل الخلفية (المسار اللي بيمشي فيه السكرول) */
+html::-webkit-scrollbar-track {
+  background: #d5d5d5; /* لون الخلفية */
+  padding: 5px;
+}
+
+/* 3. ستايل الجزء المتحرك نفسه (الـ Handle) */
+html::-webkit-scrollbar-thumb {
+  background: #0444c3; /* لون الجزء المتحرك */
+  border-radius: 10px; /* حواف دائرية */
+  height: 10px;
+  border: 3px solid #d5d5d5;
 }

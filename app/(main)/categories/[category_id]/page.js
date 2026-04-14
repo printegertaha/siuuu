@@ -4,13 +4,13 @@ import ProductCard from "@/app/_components/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useAlertMsg } from "@/app/_context/AlertMsgContext";
+import SkeletonProducts from "@/app/skelton/SkeletonProducts";
 
 export default function ProductsByCategory() {
   const pathname = usePathname();
   const readOnlySearchParams = useSearchParams();
   const currentCategory = pathname.split("/")[2];
   const { setAlert } = useAlertMsg();
-k
 
   async function getProducts() {
     console.log(`is fetching ${currentCategory} products....`);
@@ -60,19 +60,14 @@ k
 
         {filteredProducts?.length > 0 ? (
           <div
-            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ${isFetching ? "opacity-50" : "opacity-100"}`}
+            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ${isFetching ? "opacity-90" : "opacity-100"}`}
           >
             {filteredProducts.map((p) => (
               <ProductCard product={p} key={p._id} category={currentCategory} />
             ))}
           </div>
         ) : isGettingProducts ? (
-          <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-            <div className="w-12 h-12 rounded-full border-4 border-gray-200 border-t-sky-500 animate-spin"></div>
-            <p className="text-gray-500 font-medium animate-pulse">
-              Loading products...
-            </p>
-          </div>
+        <SkeletonProducts />
         ) : (
           <div className="flex items-center justify-center h-[calc(100vh-220px)] text-red-700">
             No Products Found

@@ -8,12 +8,12 @@ export default function ProductCard({ product, category }) {
     <div className="group relative bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 transition-shadow duration-300 hover:shadow-md">
       {/* Image Container */}
       <Link
-        href={`/products/${product?.title?.replaceAll(" ", "-")}-PID-${product._id}`}
+        href={`/products/${product?.title?.replaceAll(" ", "-")}-PID-${product?._id}`}
         className="block relative aspect-16/11 overflow-hidden bg-gray-100"
       >
         <Image
-          src={product.thumbnail}
-          alt={product.title}
+          src={product?.thumbnail || '/don.jpeg'}
+          alt={product?.title || 'product image'}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
@@ -24,10 +24,10 @@ export default function ProductCard({ product, category }) {
       <div className="p-4 space-y-3">
         <div className="space-y-0.5">
           <Link
-            href={`/products/${product?.title?.replaceAll(" ", "-")}-PID-${product._id}`}
+            href={`/products/${product?.title?.replaceAll(" ", "-")}-PID-${product?._id}`}
           >
             <h3 className="text-base font-bold text-gray-800 line-clamp-1 group-hover:text-sky-600 transition-colors">
-              {product.title}
+              {product?.title}
             </h3>
           </Link>
           <p className="text-xs text-gray-500 uppercase tracking-wider font-medium">
@@ -37,7 +37,7 @@ export default function ProductCard({ product, category }) {
 
         <div className="flex flex-wrap items-center justify-between pt-1 gap-3">
           <div className="flex items-center text-xl font-black text-gray-950 shrink-0">
-            <span className="mr-0.5">{product.price}</span>
+            <span className="mr-0.5">{product?.price}</span>
             <FaPoundSign className="text-xs text-sky-600 self-start mt-1.5" />
           </div>
           <button

@@ -71,7 +71,7 @@ export default function AdsSlider() {
               />
               <div className="max-w-[45%] h-full grid grid-rows-[auto_auto_1fr_auto] gap-y-2 sm:gap-7  pb-10 absolute  top-5 left-5 sm:left-12.5 text-white">
                 <span className="uppercase max-[333px]:text-[10px] w-max">{ad.saleName}</span>
-                <h3 className="font-black sm:text-3xl max-[333px]:text-xs ">{ad.title}</h3>
+                <h3 className="font-black sm:text-3xl max-[333px]:text-xs truncate">{ad.title}</h3>
                 <p className="text-xs capitalize max-[333px]:text-[10px] line-clamp-4 overflow-hidden h-fit ">{ad.description}</p>
                 <Link href={`/products/${ad.id}`} className="bg-blue-800  px-8 py-2 rounded-3xl capitalize w-max max-[375px]:text-xs max-[375px]:px-3">shop now</Link>
               </div>

@@ -5,14 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import Link from "next/link";
-import useCategories from "./FetchCategories";
+import useCategories from "../hooks/useCategories";
 
 export default function CategoriesSelect({
   mode = "categoryNavigate",
   updateCategoryInFormSelect,
 }) {
   
-  const {categories, isLoading} = useCategories();
+  const {data: categories, isLoading} = useCategories();
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [categorySelected, setCategorySelected] = useState(
     mode === "categoryNavigate" ? "All Categories" : "Select Category",
@@ -55,7 +55,7 @@ export default function CategoriesSelect({
       </span>
       {isCategoryOpen && (
         <ul className="absolute top-10 w-full  rounded-2xl  bg-gray-50 shadow ">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <li
               key={category._id}
               onClick={() => {
