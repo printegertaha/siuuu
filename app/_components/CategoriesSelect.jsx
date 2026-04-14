@@ -11,8 +11,7 @@ export default function CategoriesSelect({
   mode = "categoryNavigate",
   updateCategoryInFormSelect,
 }) {
-  
-  const {data: categories, isLoading} = useCategories();
+  const { data: categories, isLoading } = useCategories();
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [categorySelected, setCategorySelected] = useState(
     mode === "categoryNavigate" ? "All Categories" : "Select Category",
@@ -26,7 +25,7 @@ export default function CategoriesSelect({
     ?.replaceAll("--", " & ")
     .replaceAll("-", " ");
 
-  //   Handle Click Outside To Close
+  //  ضغطة خارج القائمة تقفلها
   useEffect(() => {
     function clickOutsideHandler(e) {
       if (!selectBoxRef?.current?.contains(e.target)) {
@@ -37,6 +36,12 @@ export default function CategoriesSelect({
 
     return () => document.removeEventListener("click", clickOutsideHandler);
   }, []);
+
+  useEffect(() => {
+    if (!pathname.includes("categories")) {
+      setCategorySelected("All Categories");
+    }
+  }, [pathname]);
 
   return (
     <div

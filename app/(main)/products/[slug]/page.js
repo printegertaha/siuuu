@@ -1,9 +1,8 @@
 import React from "react";
-
 // 1. Server-Side Fetching (كما هي، أداء مثالي)
 async function getProductData(id) {
   try {
-    const res = await fetch(`https://siuuu-six.vercel.app/api/products/${id}`, {
+    const res = await fetch(`http://localhost:3000/api/products/${id}`, {
       next: { revalidate: 3600 }, // Cache for 1 hour
     });
     if (!res.ok) return null;
@@ -25,7 +24,7 @@ export default async function ProductDetailsPage({ params }) {
       <div className="flex h-[70vh] items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-800">
-            المنتج ده مش متاح حالياً يا هندسة 😅
+          شكلك نسيت تضيف الدومين قبل / api , المنتج مش موجود 
           </h2>
         </div>
       </div>
@@ -102,8 +101,8 @@ export default async function ProductDetailsPage({ params }) {
             </div>
           </div>
         </div>
-        <div className="fixed top-1/2 left-5 -translate-y-1/2 opacity-80  capitalize text-xs text-red-600">
-          test page not my design !
+        <div className="fixed top-1/2 left-5 -translate-y-1/2 opacity-80  capitalize text-sm text-red-600">
+          لسه الصفحة دي تحت الانشاء دا تصميم تجربة بس
         </div>
       </main>
     </div>
