@@ -96,12 +96,14 @@ export default function Navbar() {
             className="relative max-[250px]:hidden"
             onClick={() => setIsCartVisible((pre) => !pre)}
           >
-            <ShoppingBag
-              size={16}
-              className="text-md sm:text-2xl cursor-pointer"
-              title="cart"
-            />
-            <span className="absolute -top-1 -right-1 sm:-top-0.5 sm:-right-0.5 bg-red-500 w-2 h-2 sm:w-2 sm:h-2 rounded-[50%] "></span>{" "}
+            <button className="relative hover:bg-gray-200 w-8 h-8 rounded-[50%] flex items-center justify-center cursor-pointer">
+              <ShoppingBag
+                size={16}
+                className="text-md sm:text-2xl "
+                title="cart"
+              />
+            {/* <span className="absolute -top-1 -right-1 sm:-top-0.5 sm:-right-0.5 bg-red-500 w-2 h-2 sm:w-2 sm:h-2 rounded-[50%] "></span>{" "} */}
+            </button>
           </div>
           <div className="hidden relative max-[220px]:hidden">
             <Bell
