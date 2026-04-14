@@ -3,7 +3,7 @@ import React from "react";
 // 1. Server-Side Fetching (كما هي، أداء مثالي)
 async function getProductData(id) {
   try {
-    const res = await fetch(`http://localhost:3000/api/products/${id}`, {
+    const res = await fetch(`/api/products/${id}`, {
       next: { revalidate: 3600 }, // Cache for 1 hour
     });
     if (!res.ok) return null;
