@@ -73,7 +73,7 @@ export default function AdsSlider() {
                 <span className="uppercase max-[333px]:text-[10px] w-max">{ad.saleName}</span>
                 <h3 className="font-black sm:text-3xl max-[333px]:text-xs truncate">{ad.title}</h3>
                 <p className="text-xs capitalize max-[333px]:text-[10px] line-clamp-4 overflow-hidden h-fit ">{ad.description}</p>
-                <Link href={`/products/${ad.id}`} className="bg-blue-800  px-8 py-2 rounded-3xl capitalize w-max max-[375px]:text-xs max-[375px]:px-3">shop now</Link>
+                <Link href={`/`} className="bg-blue-800  px-8 py-2 rounded-3xl capitalize w-max max-[375px]:text-xs max-[375px]:px-3">shop now</Link>
               </div>
             </div>
           ))}
@@ -90,7 +90,7 @@ export default function AdsSlider() {
         {topSale.map(product => (
           <div key={product.id} className="lg:h-[50%] w-full sm:h-full flex gap-2 nth-[1]:bg-[#d7ebf2] nth-[2]:bg-[#eae7de] rounded-2xl ">
             <div className="w-[70%] flex flex-col justify-between p-7">
-              <h3 className="font-bold  xl:text-xl tracking-[1px] capitalize "><Link href={`/products/${product.title.replaceAll(' ', '-')}`} className="hover:text-blue-700">{product.title}</Link></h3>
+              <h3 className="font-bold  xl:text-xl tracking-[1px] capitalize "><Link href={`/`} className="hover:text-blue-700">{product.title}</Link></h3>
               <p>save up to <span className="text-blue-600 font-bold capitalize">${product.saleValue}</span></p>
             </div>
             <div className="relative flex items-center w-[50%] ">
