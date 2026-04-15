@@ -14,16 +14,16 @@ export default function AdsSlider() {
     if (!sliderBox) return;
 
     const autoScroll = setInterval(() => {
-      const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+      const { scrollLeft, scrollWidth, offsetWidth } = sliderRef.current;
 
-      if (Math.ceil(scrollLeft + clientWidth >= scrollWidth)) {
+      if (Math.ceil(scrollLeft + offsetWidth >= scrollWidth)) {
         sliderBox.scrollTo({
           left: 0,
           behavior: "smooth",
         });
       } else {
         sliderBox.scrollBy({
-          left: clientWidth,
+          left: offsetWidth,
         });
       }
     }, 1000 * 7);
@@ -33,8 +33,8 @@ export default function AdsSlider() {
   // تحديث تلقائي لرقم الصورة الحالية
   function adsScrollHandler() {
     if (sliderRef.current) {
-      const { scrollLeft, clientWidth } = sliderRef.current;
-      setCurrentIndex(Math.round(scrollLeft / clientWidth));
+      const { scrollLeft, offsetWidth } = sliderRef.current;
+      setCurrentIndex(Math.round(scrollLeft / offsetWidth));
     }
   }
 
@@ -53,14 +53,15 @@ export default function AdsSlider() {
     >
       <section className="w-full sm:row-span-1 sm:col-span-2 lg:col-span-1  overflow-hidden  rounded-2xl relative ">
         <div
-          className=" adsSlider flex gap-4 h-full overflow-x-auto snap-x snap-mandatory scroll-smooth noScrollBar"
+          className=" adsSlider flex  h-full overflow-x-auto snap-x snap-mandatory scroll-smooth noScrollBar"
           ref={sliderRef}
           onScroll={adsScrollHandler}
+          style={{ WebkitOverflowScrolling: 'touch' }}
         >
           {ads.map((ad) => (
             <div
               key={ad.id}
-              className="relative  sm:row-end-2 sm:col-span-2 min-w-full h-full snap-start  overflow-hidden"
+              className="relative shrink-0 w-full sm:row-end-2 sm:col-span-2 min-w-full h-full snap-start  overflow-hidden"
             >
               <Image
                 src={ad.img}
@@ -79,14 +80,14 @@ export default function AdsSlider() {
               <button
                 type="button"
                 key={idx}
-                className={`transition-all duration-300 h-2 w-2 sm:h-3 sm:w-3 rounded-full cursor-pointer ${
+                className={`transition-all duration-100 h-2 w-2 sm:h-3 sm:w-3 rounded-full cursor-pointer ${
                   currentIndex === idx
                     ? "bg-blue-800 w-4 sm:w-6"
                     : "bg-white/50 "
                 }`}
                 onClick={() => {
                   sliderRef?.current?.scrollTo({
-                    left: idx * sliderRef.current.clientWidth,
+                    left: idx * sliderRef.current.offsetWidth,
                     behavior: "smooth"
                   });
                 }}
@@ -123,7 +124,7 @@ export default function AdsSlider() {
                 fill
                 sizes="100%"
                 style={{ objectFit: "cover" }}
-                className="object-contain rounded-xl"
+                className="rounded-xl"
               />
             </div>
           </div>
