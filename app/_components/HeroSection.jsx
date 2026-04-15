@@ -38,7 +38,6 @@ export default function AdsSlider() {
     }
   }
 
-
   return (
     <main
       className={`grid 
@@ -56,9 +55,9 @@ export default function AdsSlider() {
           className=" adsSlider flex  h-full overflow-x-auto snap-x snap-mandatory scroll-smooth noScrollBar"
           ref={sliderRef}
           onScroll={adsScrollHandler}
-          style={{ WebkitOverflowScrolling: 'touch' }}
+          style={{ WebkitOverflowScrolling: "touch" }}
         >
-          {ads.map((ad) => (
+          {/* {ads.map((ad) => (
             <div
               key={ad.id}
               className="relative shrink-0 w-full sm:row-end-2 sm:col-span-2 min-w-full h-full snap-start  overflow-hidden"
@@ -72,8 +71,46 @@ export default function AdsSlider() {
                 priority
               />
             </div>
+          ))} */}
+          {ads.map((ad) => (
+            <div
+              key={ad.id}
+              // تعديل: إضافة max-w-full وضمان flex-basis
+              className="relative shrink-0 w-full min-w-full max-w-full h-full snap-start overflow-hidden"
+            >
+              <Image
+                src={ad.img}
+                alt={ad.brand}
+                fill
+                sizes="(max-width: 768px) 100vw, 80vw"
+                // تعديل: استخدام object-cover عشان يملأ الـ Container تماماً
+                className="object-fill z-0 rounded-xl"
+                priority
+              />
+            </div>
           ))}
-
+          {/* زراير التنقل - تعديل الحسبة */}
+          <div className="flex absolute bottom-2.5 left-1/2 -translate-x-1/2 z-10 gap-2">
+            {ads.map((_, idx) => (
+              <button
+                type="button"
+                key={idx}
+                className={`transition-all duration-300 h-2 w-2 sm:h-3 sm:w-3 rounded-full cursor-pointer ${
+                  currentIndex === idx
+                    ? "bg-blue-800 w-4 sm:w-6"
+                    : "bg-white/50"
+                }`}
+                onClick={() => {
+                  // تعديل: استخدام offsetWidth لضمان دقة التنقل
+                  const width = sliderRef.current.offsetWidth;
+                  sliderRef.current?.scrollTo({
+                    left: idx * width,
+                    behavior: "smooth",
+                  });
+                }}
+              ></button>
+            ))}
+          </div>
           {/* زراير ل أنهي صورة اللي معروضة */}
           <div className="flex absolute bottom-2.5  left-1/2 -translate-x-1/2 z-1 gap-2">
             {ads.map((_, idx) => (
@@ -88,7 +125,7 @@ export default function AdsSlider() {
                 onClick={() => {
                   sliderRef?.current?.scrollTo({
                     left: idx * sliderRef.current.offsetWidth,
-                    behavior: "smooth"
+                    behavior: "smooth",
                   });
                 }}
               ></button>
@@ -131,7 +168,7 @@ export default function AdsSlider() {
         ))}
       </section>
 
-{/* مميزات الموقع */}
+      {/* مميزات الموقع */}
       <section className="hidden sm:flex flex-nowrap min-[1277px]:justify-center row-start-3 col-span-2 lg:row-start-2    gap-x-22  px-5 mt-3 overflow-x-auto rounded-2xl shadow py-5  noScrollBar ">
         {advantages.map((item) => (
           <div
