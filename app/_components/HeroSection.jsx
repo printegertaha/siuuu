@@ -16,7 +16,7 @@ export default function AdsSlider() {
     const autoScroll = setInterval(() => {
       const { scrollLeft, scrollWidth, offsetWidth } = sliderRef.current;
 
-      if (Math.ceil(scrollLeft + offsetWidth + 2 >= scrollWidth)) {
+      if (Math.ceil(scrollLeft + offsetWidth + 10 >= scrollWidth)) {
         sliderBox.scrollTo({
           left: 0,
           behavior: "smooth",
@@ -52,7 +52,7 @@ export default function AdsSlider() {
     >
       <section className="w-full sm:row-span-1 sm:col-span-2 lg:col-span-1  overflow-hidden  rounded-2xl relative ">
         <div
-          className=" adsSlider flex  h-full overflow-x-auto snap-x snap-mandatory scroll-smooth noScrollBar"
+          className=" adsSlider flex gap-0 border-none  h-full overflow-x-auto snap-x snap-mandatory scroll-smooth noScrollBar"
           ref={sliderRef}
           onScroll={adsScrollHandler}
           style={{ WebkitOverflowScrolling: "touch" }}
@@ -60,14 +60,14 @@ export default function AdsSlider() {
           {ads.map((ad) => (
             <div
               key={ad.id}
-              className="relative shrink-0 w-full sm:row-end-2 sm:col-span-2 min-w-full h-full snap-start  overflow-hidden"
+              className="relative flex-[0_0_100%] w-full min-w-full max-w-full h-full sm:row-end-2 sm:col-span-2  snap-start  overflow-hidden"
             >
               <Image
                 src={ad.img}
                 alt={ad.brand}
                 fill
                 sizes="100%"
-                className="object-fit  z-0 rounded-xl  "
+                className="object-fill  z-0 rounded-xl  "
                 priority
               />
             </div>

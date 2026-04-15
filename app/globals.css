@@ -32,6 +32,23 @@
   }
 }
 
+
+.adsSlider {
+  display: flex;
+  flex-wrap: nowrap;
+  letter-spacing: -1em; /* حل سحري لإلغاء أي فراغ خفي بين العناصر */
+}
+
+.adsSlider > div {
+  letter-spacing: normal; /* نرجع الخط لطبيعته جوه السلايد */
+}
+
+
+
+
+
+
+
 /* 1. تحديد عرض شريط التمرير */
 html::-webkit-scrollbar {
   width: 10px; /* عرض السكرول بار الرأسي */
