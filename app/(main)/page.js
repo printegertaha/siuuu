@@ -1,5 +1,6 @@
-import Categories from "@/app/_components/Categories";
-import HeroSection from "@/app/_components/HeroSection";
+import Categories from ".././_components/Categories";
+import HeroSection from ".././_components/HeroSection";
+
 export default function Home() {
   return (
     <div>

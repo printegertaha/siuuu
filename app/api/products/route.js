@@ -10,7 +10,7 @@ export async function GET(request) {
 
     const { searchParams } = new URL(request.url);
     const category = searchParams.get("category");
-    const sortType = searchParams.get("sort") || 'latest';
+    const sortType = searchParams.get("sort") || "latest";
 
     // 1. بناء الفلتر
     let query = {};
@@ -32,14 +32,13 @@ export async function GET(request) {
     } else if (sortType === "oldest") {
       sortOptions.createdAt = 1;
     } else {
-      sortOptions = { createdAt: -1 }; 
+      sortOptions = { createdAt: -1 };
     }
 
     // 3. التنفيذ مع إضافة .lean() لتحسين الأداء وتجنب مشاكل الـ Circular Structures
     const products = await Product.find(query).sort(sortOptions).lean();
-    
-    return NextResponse.json({ data: products }, { status: 200 });
 
+    return NextResponse.json({ data: products }, { status: 200 });
   } catch (err) {
     console.error("Mongoose Error Details:", err.message); // هيطبع لك السبب الحقيقي للـ 500 في الـ Terminal
     return NextResponse.json({ message: err.message }, { status: 500 });

@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { RiShoppingBag2Line } from "react-icons/ri";
 import { FaBars } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
 import { usePathname } from "next/navigation";
@@ -10,7 +9,7 @@ import CategoriesSelect from "./CategoriesSelect";
 import { useState } from "react";
 import SideBar from "./SideBar";
 import { Bell, Heart, ShoppingBag } from "lucide-react";
-import CartSm from "@/app/_components/CartSm";
+import CartSm from "./CartSm";
 
 export default function Navbar() {
   const pathname = usePathname();

@@ -10,7 +10,7 @@ export default function useCategories() {
         throw new Error("failed to get categories");
       }
       const data = (await res.json())?.data;
-      return data;
+      return data || [];
     },
     staleTime: 1000 * 60 * 60 * 24,
   });

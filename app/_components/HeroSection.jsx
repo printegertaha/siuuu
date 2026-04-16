@@ -3,40 +3,10 @@ import Image from "next/image";
 import { ads, advantages, topSale } from "../data";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import ImagesSlider from "./ImagesSlider";
 
 export default function AdsSlider() {
-  const sliderRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
-  // عرض تلقائي للصورة حسب الرقم الحالي
-  useEffect(() => {
-    const sliderBox = sliderRef?.current;
-    if (!sliderBox) return;
-
-    const autoScroll = setInterval(() => {
-      const { scrollLeft, scrollWidth, offsetWidth } = sliderRef.current;
-
-      if (Math.ceil(scrollLeft + offsetWidth + 10 >= scrollWidth)) {
-        sliderBox.scrollTo({
-          left: 0,
-          behavior: "smooth",
-        });
-      } else {
-        sliderBox.scrollBy({
-          left: offsetWidth,
-        });
-      }
-    }, 1000 * 7);
-    return () => clearInterval(autoScroll);
-  }, []);
-
-  // تحديث تلقائي لرقم الصورة الحالية
-  function adsScrollHandler() {
-    if (sliderRef.current) {
-      const { scrollLeft, offsetWidth } = sliderRef.current;
-      setCurrentIndex(Math.round(scrollLeft / offsetWidth));
-    }
-  }
 
   return (
     <main
@@ -51,49 +21,7 @@ export default function AdsSlider() {
     `}
     >
       <section className="w-full sm:row-span-1 sm:col-span-2 lg:col-span-1  overflow-hidden  rounded-2xl relative ">
-        <div
-          className=" adsSlider flex gap-0 border-none  h-full overflow-x-auto snap-x snap-mandatory scroll-smooth noScrollBar"
-          ref={sliderRef}
-          onScroll={adsScrollHandler}
-          style={{ WebkitOverflowScrolling: "touch" }}
-        >
-          {ads.map((ad) => (
-            <div
-              key={ad.id}
-              className="relative flex-[0_0_100%] w-full min-w-full max-w-full h-full sm:row-end-2 sm:col-span-2  snap-start  overflow-hidden"
-            >
-              <Image
-                src={ad.img}
-                alt={ad.brand}
-                fill
-                sizes="100%"
-                className="object-fill  z-0 rounded-xl  "
-                priority
-              />
-            </div>
-          ))}
-
-          {/* زراير ل أنهي صورة اللي معروضة */}
-          <div className="flex absolute bottom-2.5  left-1/2 -translate-x-1/2 z-1 gap-2">
-            {ads.map((_, idx) => (
-              <button
-                type="button"
-                key={idx}
-                className={`transition-all duration-100 h-2 w-2 sm:h-3 sm:w-3 rounded-full cursor-pointer ${
-                  currentIndex === idx
-                    ? "bg-blue-800 w-4 sm:w-6"
-                    : "bg-white/50 "
-                }`}
-                onClick={() => {
-                  sliderRef?.current?.scrollTo({
-                    left: idx * sliderRef.current.offsetWidth,
-                    behavior: "smooth",
-                  });
-                }}
-              ></button>
-            ))}
-          </div>
-        </div>
+        <ImagesSlider images={ads}/>
       </section>
 
       {/* الأكثر مبيعا أو منتجين مدفوعلهم */}

@@ -33,16 +33,6 @@
 }
 
 
-.adsSlider {
-  display: flex;
-  flex-wrap: nowrap;
-  letter-spacing: -1em; /* حل سحري لإلغاء أي فراغ خفي بين العناصر */
-}
-
-.adsSlider > div {
-  letter-spacing: normal; /* نرجع الخط لطبيعته جوه السلايد */
-}
-
 
 
 
