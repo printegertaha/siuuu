@@ -1,7 +1,7 @@
 
 export default function SkeletonProducts() {
   return (
-    <div className="relative bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 animate-pulse">
+    <div className="relative min-w-[250px] bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 animate-pulse">
       
       {/* Image Skeleton */}
       <div className="relative aspect-16/11 bg-gray-200" />

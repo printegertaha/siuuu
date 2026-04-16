@@ -14,9 +14,9 @@ export default function ProductsByCategory() {
 
   async function getProducts() {
     console.log(`is fetching ${currentCategory} products....`);
-    const sortValue = readOnlySearchParams.get('sort');
+    const sortValue = readOnlySearchParams.get("sort");
     const res = await fetch(
-      `/api/products?category=${currentCategory}&sort=${sortValue }`,
+      `/api/products?category=${currentCategory}&sort=${sortValue}`,
     );
     if (res.status == 500) {
       console.log(res.status);
@@ -38,7 +38,11 @@ export default function ProductsByCategory() {
     isLoading: isGettingProducts,
     isFetching,
   } = useQuery({
-    queryKey: ["filteredProducts", currentCategory, readOnlySearchParams.toString()],
+    queryKey: [
+      "filteredProducts",
+      currentCategory,
+      readOnlySearchParams.toString(),
+    ],
     queryFn: getProducts,
     staleTime: 1000 * 28,
     refetchInterval: 1000 * 30,
@@ -46,6 +50,7 @@ export default function ProductsByCategory() {
     refetchIntervalInBackground: false,
     placeholderData: (prev) => prev,
   });
+  console.log('isFetching: '+isFetching)
 
   return (
     <div className="bg-gray-50 min-h-screen py-10">
@@ -60,20 +65,25 @@ export default function ProductsByCategory() {
 
         {filteredProducts?.length > 0 ? (
           <div
-            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ${isFetching ? "opacity-90" : "opacity-100"}`}
+            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ${isFetching ? "opacity-50" : "opacity-100"}`}
           >
             {filteredProducts.map((p) => (
               <ProductCard product={p} key={p._id} category={currentCategory} />
             ))}
           </div>
         ) : isGettingProducts ? (
-        <SkeletonProducts />
-        ) : (
+          <div className="flex flex-wrap gap-4 justify-center ">
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <SkeletonProducts key={idx} />
+            ))}
+          </div>
+        ) :  (
           <div className="flex items-center justify-center h-[calc(100vh-220px)] text-red-700">
             No Products Found
           </div>
         )}
       </div>
+      {isFetching && !isGettingProducts && <div className="fixed top-1/2 left-1/2 -translate-1/2 w-10 h-10 rounded-full border-2 border-t-blue-500 animate-spin rotate-360"></div>}
     </div>
   );
 }

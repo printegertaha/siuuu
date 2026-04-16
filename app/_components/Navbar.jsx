@@ -46,13 +46,13 @@ export default function Navbar() {
         <section className="hidden gap-5 items-center sm:flex ">
           <CategoriesSelect />
           {/*         Search                                              */}
-          <div className="relative border-2 rounded-3xl w-full">
+          <div className="relative border-2 rounded-3xl w-full"dir="rtl">
             <input
               type="text"
-              placeholder="search..."
+              placeholder="لسه مش شغال"
               className="rounded-3xl px-2 py-1 "
             />
-            <CiSearch className="absolute  right-2 top-[50%] translate-y-[-50%]" />
+            <CiSearch className="absolute  left-2 top-[50%] translate-y-[-50%]" />
           </div>
         </section>
 
@@ -101,7 +101,7 @@ export default function Navbar() {
                 className="text-md sm:text-2xl "
                 title="cart"
               />
-            {/* <span className="absolute -top-1 -right-1 sm:-top-0.5 sm:-right-0.5 bg-red-500 w-2 h-2 sm:w-2 sm:h-2 rounded-[50%] "></span>{" "} */}
+              {/* <span className="absolute -top-1 -right-1 sm:-top-0.5 sm:-right-0.5 bg-red-500 w-2 h-2 sm:w-2 sm:h-2 rounded-[50%] "></span>{" "} */}
             </button>
           </div>
           <div className="hidden relative max-[220px]:hidden">
