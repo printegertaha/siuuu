@@ -91,7 +91,7 @@ export default function ProductDetailsPage({ params: paramsPromise }) {
         {/* العمود الأكبر: السلايدر والتفاصيل */}
         <div className="relative lg:col-span-8 space-y-6">
           {/* Smart Slider */}
-          <div className="relativbordere group overflow-hidden rounded-[2.5rem] shadow-2xl bg-white border border-gray-100">
+          <div className="relative bordere group overflow-hidden rounded-[2.5rem] shadow-2xl bg-white border border-gray-100">
             <div
               ref={scrollRef}
               onScroll={handleScroll}
