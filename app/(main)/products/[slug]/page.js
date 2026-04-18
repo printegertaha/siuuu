@@ -57,7 +57,7 @@ export default function ProductDetailsPage({ params: paramsPromise }) {
 
   if (!product) return <div className="h-screen flex items-center justify-center font-bold">المنتج غير موجود</div>;
 
-  const images = product.images || [product.image];
+  const images =  [...product?.images, product.thumbnail];
 
   return (
     <div className="max-w-5xl mx-auto p-4 md:p-10 bg-white min-h-screen text-right selection:bg-blue-100" dir="rtl">
@@ -138,7 +138,7 @@ export default function ProductDetailsPage({ params: paramsPromise }) {
                   {product.title}
                 </h1>
                 <div className="flex flex-col items-end">
-                  <span className="text-2xl font-black text-blue-600">
+                  <span className="text-2xl font-black text-blue-600 overflow-auto max-w-[99%]">
                     {product.price?.toLocaleString()} <small className="text-xs font-medium text-gray-400">ج.م</small>
                   </span>
                 </div>

@@ -50,22 +50,32 @@ export default function ProductsByCategory() {
     refetchIntervalInBackground: false,
     placeholderData: (prev) => prev,
   });
-  console.log('isFetching: '+isFetching)
+  console.log("isFetching: " + isFetching);
 
   return (
     <div className="bg-gray-50 min-h-screen py-10">
       <div className="max-w-7xl mx-auto px-4">
-        <section className="flex justify-between items-start ">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-10 tracking-tight">
-            Explore{" "}
-            <span className="text-sky-500 capitalize">{currentCategory}</span>
+        <section className="flex flex-row justify-between items-center gap-4 border-b pb-4 mb-10">
+          {/* حاوية العنوان: تأخذ المساحة المتاحة وتسمح بالتصغير */}
+          <h2 className="flex items-center gap-2 min-w-0 flex-1">
+
+            {/* اسم القسم: يتقلص ويضيف نقاط عند ضيق المساحة */}
+            <span className="inline-block truncate border border-sky-100 bg-sky-50 px-2 py-0.5 text-sm sm:text-md
+
+            {/* اسم text-sky-500 capitalize tracking-wider rounded-md font-medium">
+              {currentCategory.replaceAll("--", " & ").replaceAll("-", " ")}
+            </span>
           </h2>
-          <Filter />
+
+          {/* حاوية الفلتر: تمنع التقلص للحفاظ على الأيقونة واضحة */}
+          <div className="flex-shrink-0">
+            <Filter />
+          </div>
         </section>
 
         {filteredProducts?.length > 0 ? (
           <div
-            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ${isFetching ? "opacity-50" : "opacity-100"}`}
+            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 `}
           >
             {filteredProducts.map((p) => (
               <ProductCard product={p} key={p._id} category={currentCategory} />
@@ -77,13 +87,12 @@ export default function ProductsByCategory() {
               <SkeletonProducts key={idx} />
             ))}
           </div>
-        ) :  (
+        ) : (
           <div className="flex items-center justify-center h-[calc(100vh-220px)] text-red-700">
             No Products Found
           </div>
         )}
       </div>
-      {isFetching && !isGettingProducts && <div className="fixed top-1/2 left-1/2 -translate-1/2 w-10 h-10 rounded-full border-2 border-t-blue-500 animate-spin rotate-360"></div>}
     </div>
   );
 }
