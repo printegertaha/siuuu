@@ -8,7 +8,6 @@ import Link from "next/link";
 import useCategories from "../hooks/useCategories";
 import { Category } from "../types";
 
-
 interface CategoriesSelectProps {
   mode?: "categoryNavigate" | "categorySelect";
   updateCategoryInFormSelect?: (categoryName: string) => void;
@@ -24,7 +23,7 @@ export default function CategoriesSelect({
 
   const [isCategoryOpen, setIsCategoryOpen] = useState<boolean>(false);
   const [categorySelected, setCategorySelected] = useState<string>(
-    mode === "categoryNavigate" ? "All Categories" : "Select Category",
+    mode === "categoryNavigate" ? "كل التصنيفات" : "Select Category",
   );
 
   const pathname = usePathname();
@@ -51,7 +50,7 @@ export default function CategoriesSelect({
 
   useEffect(() => {
     if (!pathname.includes("categories")) {
-      setCategorySelected("All Categories");
+      setCategorySelected("كل التصنيفات");
     }
   }, [pathname]);
 

@@ -21,10 +21,10 @@ export default function CreateProduct() {
 
   async function submitHandler(e) {
     e.preventDefault();
-    const category = productData.category;
-    const title = productData.title.trim().length >= 1;
-    const price = productData.price >= 0;
-    const description = productData.description.trim().length >= 3;
+    const category = productData?.category;
+    const title = productData?.title.trim().length >= 1;
+    const price = productData?.price > 0;
+    const description = productData?.description.trim().length >= 3;
     const gellaryValidation = gellary.length > 0;
     const ownerID = userInfo.user.id;
 
@@ -79,11 +79,11 @@ export default function CreateProduct() {
         isVisible: true,
         isSuccess: false,
         message: !category
-          ? "Select Category"
+          ? "اختار تصنيف"
           : !title
             ? "شكلك نسيت الاسم"
             : !price
-              ? "price >= 0"
+              ? "حط سعر بقا"
               : !description
                 ? "الوصف يا نجم"
                 : !ownerID
@@ -208,26 +208,28 @@ export default function CreateProduct() {
           </div>
 
           {/* Images Show */}
-          <div className="flex items-center gap-2 overflow-x-auto border no-scrollbar rounded-2xl p-2 h-24">
-            {gellary.map((img, idx) => (
-              <div key={idx} className="relative shrink-0 h-20 w-20">
-                <img src={img.fakeUrl} className="w-full h-full rounded-sm" />
-                <button
-                  type="button"
-                  className="bg-gray-900/70  absolute text-gray-300 rounded-2xl cursor-pointer top-1 right-1 "
-                  onClick={() => deleteImgFromSelected(idx)}
-                >
-                  <X className="w-7 h-7" />
-                </button>
-              </div>
-            ))}
-          </div>
+          {gellary?.length > 0 && (
+            <div className="flex items-center gap-2 overflow-x-auto border no-scrollbar rounded-2xl p-2 h-24">
+              {gellary?.map((img, idx) => (
+                <div key={idx} className="relative shrink-0 h-20 w-20">
+                  <img src={img.fakeUrl} className="w-full h-full rounded-sm" />
+                  <button
+                    type="button"
+                    className="bg-gray-900/70  absolute text-gray-300 rounded-2xl cursor-pointer top-1 right-1 "
+                    onClick={() => deleteImgFromSelected(idx)}
+                  >
+                    <X className="w-7 h-7" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/*       Submit Button                                                 */}
           <button
             type="submit"
             className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-md transition-all active:scale-[0.98] mt-4 ${isCreating && "cursor-wait"}`}
-            disabled={false}
+            disabled={isCreating}
           >
             {isCreating ? "Creating.." : "Create"}
           </button>

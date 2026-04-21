@@ -12,10 +12,10 @@ export default function ProductCard({ product, category }) {
         className="block relative aspect-16/11 overflow-hidden bg-gray-100"
       >
         <Image
-          src={product?.thumbnail || '/don.jpeg'}
-          alt={product?.title || 'product image'}
+          src={product?.thumbnail || "/don.jpeg"}
+          alt={product?.title || "product image"}
           fill
-          sizes="(max-width: 768px) 100dvw, (max-width: 1200px) 50dvw, 25vw"
+          sizes="(max-width: 768px) 100dvw, (max-width: 1200px) 50dvw, 25dvw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
       </Link>

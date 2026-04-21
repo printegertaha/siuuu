@@ -9,7 +9,7 @@ export default function HeroSection() {
 
   return (
     <main
-      className={`grid 
+      className={`grid
       grid-rows-[220px] grid-cols-1
       sm:grid-rows-[250px_200px_auto] sm:grid-cols-2
       md:grid-rows-[250px_200px_auto] md:grid-cols-2

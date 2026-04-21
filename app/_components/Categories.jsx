@@ -8,7 +8,7 @@ export default function Categories() {
   const { data: categories, isLoading } = useCategories();
 
   return (
-    <section className="mx-[2%] flex flex-col gap-y-0 rounded-2xl p-4 mb-5 ">
+    <section className="mx-[2%]  flex flex-col gap-y-0 rounded-2xl p-4 mb-5 ">
 
       <h4 className=" sm:text-3xl text-gray-600 max-[160px]:text-[10px]  text-sm">
         Browse by Category
