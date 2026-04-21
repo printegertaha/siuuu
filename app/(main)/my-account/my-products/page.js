@@ -38,10 +38,9 @@ export default function MyProducts() {
   async function deleteProductHandler(product) {
     setIsDeleting(true);
     try {
-      const res = await fetch(
-        `/api/products/${product._id}`,
-        { method: "DELETE" },
-      );
+      const res = await fetch(`/api/products/${product._id}`, {
+        method: "DELETE",
+      });
       if (res.ok) {
         setUserProducts((pre) => pre.filter((pro) => pro._id !== product._id));
         setAlert({ isVisible: true, message: "user deleted", isSuccess: true });
@@ -63,21 +62,23 @@ export default function MyProducts() {
   }, []);
 
   return (
-    <div className="p-4 md:p-8 bg-gray-50 min-h-[calc(100vh-130px)] ltr text-left">
+    <div className="p-4 md:p-8 bg-gray-50 min-h-[calc(100dvh-130px)] ltr text-left">
       {/* Header Section */}
       <div className="mb-8 border-b pb-4">
-        <h1 className="text-3xl max-[190px]:text-xs font-bold text-gray-800">Products Dashboard</h1>
+        <h1 className="text-3xl max-[190px]:text-xs font-bold text-gray-800">
+          Products Dashboard
+        </h1>
         <p className="text-gray-500">
           Manage, edit, or delete your listed products with ease.
         </p>
       </div>
 
       {isGettingProducts ? (
-        <div className="h-[calc(100vh-350px)] bg-red-600 flex items-center justify-center rounded-2xl">
+        <div className="h-[calc(100dvh-350px)] bg-red-600 flex items-center justify-center rounded-2xl">
           <div className="w-10 h-10 border border-t-red-600 rounded-[50%] rotate-360 animate-spin"></div>
         </div>
       ) : userProducts?.length && !isGettingProducts === 0 ? (
-        <div className="flex flex-col items-center justify-center min-h-[50vh] bg-white rounded-3xl shadow-sm border border-dashed border-gray-300">
+        <div className="flex flex-col items-center justify-center min-h-[50dvh] bg-white rounded-3xl shadow-sm border border-dashed border-gray-300">
           <div className="bg-gray-100 p-4 rounded-full mb-4">
             <Trash className="w-12 h-12 text-gray-400" />
           </div>

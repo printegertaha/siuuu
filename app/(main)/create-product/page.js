@@ -122,7 +122,7 @@ export default function CreateProduct() {
   console.log(gellary);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8 flex justify-center items-center">
+    <div className="min-h-dscreen bg-gray-50 p-4 md:p-8 flex justify-center items-center">
       <div className="w-full max-w-2xl bg-white rounded-xl shadow-lg border border-blue-100 overflow-hidden">
         {/*      Header                                                        */}
         <div className="bg-blue-600 p-6">

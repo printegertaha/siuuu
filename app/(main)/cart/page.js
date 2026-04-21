@@ -5,7 +5,7 @@ export default function Cart() {
   return (
     <div
       dir="rtl"
-      className="min-h-screen bg-[#f8f9fb] py-12 px-[5%] font-sans"
+      className="min-h-dscreen bg-[#f8f9fb] py-12 px-[5%] font-sans"
     >
       <div className="max-w-4xl mx-auto">
         {/* الحاوية الرئيسية للمحتوى */}

@@ -15,7 +15,7 @@ export default function ProductCard({ product, category }) {
           src={product?.thumbnail || '/don.jpeg'}
           alt={product?.title || 'product image'}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          sizes="(max-width: 768px) 100dvw, (max-width: 1200px) 50dvw, 25vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
       </Link>

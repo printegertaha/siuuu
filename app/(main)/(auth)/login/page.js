@@ -74,7 +74,7 @@ export default function Login () {
   return (
     <div className={` bg-[#f8f9fa] flex justify-center p-4  py-8 relative ${isLoading && 'opacity-50 ' }`} >
       
-      <div className="bg-white max-w-[80vw] xl:max-w-[70vw] 2xl:max-w-[50vw] rounded-4xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#f1f1f1] p-8 md:p-12">
+      <div className="bg-white max-w-[80dvw] xl:max-w-[70dvw] 2xl:max-w-[50dvw] rounded-4xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#f1f1f1] p-8 md:p-12">
         
         <div className="text-center mb-10">
           <h2 className="text-[#1a2b4b] text-xl font-black md:text-3xl lg:text-4xl xl:text-5xl mb-3">

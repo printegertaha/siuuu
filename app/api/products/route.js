@@ -45,7 +45,7 @@ export async function GET(request) {
   }
 }
 
-// Post Function (كما هي بدون تغيير)
+// POST Func
 export async function POST(request) {
   try {
     const data = await request.formData();

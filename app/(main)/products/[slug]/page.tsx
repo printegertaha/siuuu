@@ -1,14 +1,18 @@
 "use client";
 import { Maximize2, X, MapPin, Clock } from "lucide-react";
-import { useSession } from "next-auth/react";
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Product } from "@/app/types/product";
+
+interface Props {
+  params: Promise<{ slug: string }>;
+}
 
 // --- دالة تنسيق الوقت ---
-function formatRelativeTime(dateString) {
+function formatRelativeTime(dateString?: Date | string): string {
   if (!dateString) return "منذ مدة";
   const now = new Date();
   const date = new Date(dateString);
-  const diffInSeconds = Math.floor((now - date) / 1000);
+  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
   if (isNaN(date.getTime())) return "تاريخ غير محدد";
   if (diffInSeconds < 60) return "منذ ثواني";
   if (diffInSeconds < 3600)
@@ -20,36 +24,36 @@ function formatRelativeTime(dateString) {
   return date.toLocaleDateString("ar-EG");
 }
 
-export default function ProductDetailsPage({ params: paramsPromise }) {
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const scrollRef = useRef(null);
-  const { data: x } = useSession();
-  console.log(x);
+export default function ProductDetailsPage({ params: paramsPromise }: Props) {
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    async function fetchData(): Promise<void> {
       try {
         const params = await paramsPromise;
-        const slug = params.slug;
-        const productID = slug.split("PID").at(-1).replace("-", "");
+        const slug: string = params.slug;
+        const productID: string = slug.split("PID").at(-1).replace("-", "");
         const res = await fetch(`/api/products/${productID}`);
-        const data = await res.json();
-        setProduct(data.data);
-      } catch (error) {
-        console.error("Fetch Error:", error);
+        const result = await res.json();
+        const product: Product = result?.data;
+        setProduct(product);
+      } catch (err) {
+        console.log(err);
       } finally {
         setLoading(false);
       }
-    };
+    }
     fetchData();
   }, [paramsPromise]);
 
   const handleScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, offsetWidth } = scrollRef.current;
+    const scroll = scrollRef?.current;
+    if (scroll) {
+      const { scrollLeft, offsetWidth } = scroll;
       const index = Math.round(Math.abs(scrollLeft) / offsetWidth);
       setActiveIndex(index);
     }
@@ -57,35 +61,35 @@ export default function ProductDetailsPage({ params: paramsPromise }) {
 
   if (loading)
     return (
-      <div className="flex h-screen items-center justify-center bg-white">
+      <div className="flex h-dscreen items-center justify-center bg-white">
         <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
 
   if (!product)
     return (
-      <div className="h-screen flex items-center justify-center font-bold">
+      <div className="h-dscreen flex items-center justify-center font-bold">
         المنتج غير موجود
       </div>
     );
 
-  const images = [...product?.images, product.thumbnail];
+  const images = [...product?.images, product?.thumbnail];
 
   return (
     <div
-      className="max-w-5xl mx-auto p-4 md:p-10 bg-white min-h-screen text-right selection:bg-blue-100"
+      className="max-w-5xl mx-auto p-4 md:p-10 bg-white min-h-dscreen text-right selection:bg-blue-100"
       dir="rtl"
     >
       {/* Lightbox Popup */}
       {isPopupOpen && (
-        <div className="fixed top-20 z-[100] bg-white/95 backdrop-blur-md flex flex-col items-center justify-center p-4 mx-auto">
+        <div className="fixed top-20 z-100 bg-white/95 backdrop-blur-md flex flex-col items-center justify-center p-4 mx-auto">
           <button
             onClick={() => setIsPopupOpen(false)}
             className="absolute opacity-40 top-6 right-6 p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-all text-gray-800"
           >
             <X size={24} />
           </button>
-          <div className="w-full max-w-4xl max-h-[80vh] overflow-y-auto no-scrollbar rounded-2xl">
+          <div className="w-full max-w-4xl max-h-[80dvh] overflow-y-auto no-scrollbar rounded-2xl">
             {images.map((img, i) => (
               <img
                 key={i}
@@ -105,11 +109,11 @@ export default function ProductDetailsPage({ params: paramsPromise }) {
         <main className="space-y-8">
           {/* Slider Section */}
           <div className="relative group mx-auto max-w-3xl ">
-            <div className="relative rounded-[1.5rem] overflow-hidden bg-gray-50 border border-gray-100 shadow-sm ">
+            <div className="relative rounded-3xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm ">
               <div
                 ref={scrollRef}
                 onScroll={handleScroll}
-                className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory h-[300px] md:h-[450px] no-scrollbar"
+                className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory h-75 md:h-112.5 no-scrollbar"
               >
                 {images.map((img, i) => (
                   <div
@@ -155,13 +159,13 @@ export default function ProductDetailsPage({ params: paramsPromise }) {
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-bold uppercase tracking-widest border border-blue-100">
-                  {product.category || "General"}
+                  {product?.category || "General"}
                 </span>
               </div>
 
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight tracking-tight">
-                  {product.title}
+                  {product?.title}
                 </h1>
                 <div className="flex flex-col items-end">
                   <span className="text-2xl font-black text-blue-600 overflow-auto max-w-[99%]">
@@ -213,11 +217,11 @@ export default function ProductDetailsPage({ params: paramsPromise }) {
               <span className="text-xs text-gray-400">0 تعليق</span>
             </div>
             <div className="flex gap-3">
-              <div className="w-8 h-8 rounded-full bg-blue-100 flex-shrink-0" />
+              <div className="w-8 h-8 rounded-full bg-blue-100 shrink-0" />
               <div className="flex-1 relative">
                 <textarea
                   placeholder="لسه مش شغال..."
-                  className="w-full bg-white border border-gray-200 rounded-xl p-4 text-sm outline-none focus:border-blue-500 transition-all min-h-[80px] resize-none"
+                  className="w-full bg-white border border-gray-200 rounded-xl p-4 text-sm outline-none focus:border-blue-500 transition-all min-h-20 resize-none"
                 />
                 <button className="mt-2 px-6 py-2 bg-gray-900 text-white rounded-lg text-xs font-bold hover:bg-gray-800 transition-all">
                   إرسال

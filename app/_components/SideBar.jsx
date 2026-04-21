@@ -41,7 +41,7 @@ export default function SideBar({ isVisible, setIsVisible }) {
       {/* القائمة الجانبية */}
       <aside
         dir="rtl"
-        className={`fixed top-[80px] right-0 w-[80%] sm:w-[350px] h-[calc(100vh-80px)] bg-white border-l border-gray-100 shadow-2xl z-4000 transform transition-transform duration-300 ease-in-out flex flex-col ${
+        className={`fixed top-[80px] right-0 w-[80%] sm:w-[350px] h-[calc(100dvh-80px)] bg-white border-l border-gray-100 shadow-2xl z-4000 transform transition-transform duration-300 ease-in-out flex flex-col ${
           isVisible ? "translate-x-0" : "translate-x-full"
         } `}
       >

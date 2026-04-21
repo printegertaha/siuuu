@@ -66,7 +66,7 @@ export default function CategoriesPage() {
         fetchCategories();
       } else {
         const errData = await res.json();
-        console.log(errData );
+        console.log(errData);
       }
     } catch (error) {
       console.error("Add Error:", error);
@@ -131,7 +131,10 @@ export default function CategoriesPage() {
   }, []);
 
   return (
-    <div className="p-4 md:p-10 bg-[#f8fafc] min-h-[calc(100vh-64px)] font-sans text-right" dir="rtl">
+    <div
+      className="p-4 md:p-10 bg-[#f8fafc] min-h-[calc(100dvh-64px)] font-sans text-right"
+      dir="rtl"
+    >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-10 gap-4">
@@ -139,7 +142,9 @@ export default function CategoriesPage() {
             <h1 className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               إدارة التصنيفات
             </h1>
-            <p className="text-gray-400 mt-1">تحكم في جميع أقسام متجرك من مكان واحد</p>
+            <p className="text-gray-400 mt-1">
+              تحكم في جميع أقسام متجرك من مكان واحد
+            </p>
           </div>
           <div className="flex gap-3">
             <button
@@ -176,7 +181,9 @@ export default function CategoriesPage() {
                 >
                   <div className="absolute top-0 left-0 w-1.5 h-full bg-indigo-500 transition-all group-hover:w-2" />
                   <div className="mb-4">
-                    <h3 className="text-xl font-bold text-gray-800">{cat.name}</h3>
+                    <h3 className="text-xl font-bold text-gray-800">
+                      {cat.name}
+                    </h3>
                     <span className="text-sm bg-indigo-50 text-indigo-500 px-3 py-1 rounded-full inline-block mt-2">
                       @{cat.nickName}
                     </span>
@@ -222,36 +229,58 @@ export default function CategoriesPage() {
                 exit={{ scale: 0.9, y: 20 }}
                 className="bg-white rounded-3xl p-8 w-full max-w-md relative shadow-2xl"
               >
-                <h2 className="text-2xl font-bold mb-6">{editCategory ? "تعديل التصنيف" : "تصنيف جديد"}</h2>
-                <form onSubmit={editCategory ? handleUpdate : handleAdd} className="space-y-5">
+                <h2 className="text-2xl font-bold mb-6">
+                  {editCategory ? "تعديل التصنيف" : "تصنيف جديد"}
+                </h2>
+                <form
+                  onSubmit={editCategory ? handleUpdate : handleAdd}
+                  className="space-y-5"
+                >
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-gray-700">اسم التصنيف</label>
+                    <label className="block text-sm font-semibold mb-2 text-gray-700">
+                      اسم التصنيف
+                    </label>
                     <input
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-indigo-100 outline-none transition-all"
                       value={editCategory ? editCategory.name : formData.name}
                       onChange={(e) =>
                         editCategory
-                          ? setEditCategory({ ...editCategory, name: e.target.value })
+                          ? setEditCategory({
+                              ...editCategory,
+                              name: e.target.value,
+                            })
                           : setFormData({ ...formData, name: e.target.value })
                       }
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-gray-700">اللقب (Slug/Nickname)</label>
+                    <label className="block text-sm font-semibold mb-2 text-gray-700">
+                      اللقب (Slug/Nickname)
+                    </label>
                     <input
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-indigo-100 outline-none transition-all"
-                      value={editCategory ? editCategory.nickName : formData.nickName}
+                      value={
+                        editCategory ? editCategory.nickName : formData.nickName
+                      }
                       onChange={(e) =>
                         editCategory
-                          ? setEditCategory({ ...editCategory, nickName: e.target.value })
-                          : setFormData({ ...formData, nickName: e.target.value })
+                          ? setEditCategory({
+                              ...editCategory,
+                              nickName: e.target.value,
+                            })
+                          : setFormData({
+                              ...formData,
+                              nickName: e.target.value,
+                            })
                       }
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-gray-700">الصورة</label>
+                    <label className="block text-sm font-semibold mb-2 text-gray-700">
+                      الصورة
+                    </label>
                     <input
                       type="file"
                       accept="image/*"
@@ -259,13 +288,21 @@ export default function CategoriesPage() {
                       onChange={(e) => setImage(e.target.files[0])}
                       required={!editCategory} // مطلوبة فقط في حالة الإضافة
                     />
-                    {editCategory && <p className="text-[10px] text-gray-400 mt-1">* اتركه فارغاً للحفاظ على الصورة القديمة</p>}
+                    {editCategory && (
+                      <p className="text-[10px] text-gray-400 mt-1">
+                        * اتركه فارغاً للحفاظ على الصورة القديمة
+                      </p>
+                    )}
                   </div>
                   <button
                     disabled={loading}
                     className="w-full py-4 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-100 transition-all disabled:bg-gray-400"
                   >
-                    {loading ? "جاري المعالجة..." : editCategory ? "تحديث البيانات" : "إنشاء الآن"}
+                    {loading
+                      ? "جاري المعالجة..."
+                      : editCategory
+                        ? "تحديث البيانات"
+                        : "إنشاء الآن"}
                   </button>
                 </form>
               </motion.div>
@@ -296,8 +333,12 @@ export default function CategoriesPage() {
                 <div className="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
                   !
                 </div>
-                <h3 className="text-xl font-bold text-gray-800">هل أنت متأكد؟</h3>
-                <p className="text-gray-500 mt-2">لا يمكن التراجع عن هذا الإجراء بعد تنفيذه.</p>
+                <h3 className="text-xl font-bold text-gray-800">
+                  هل أنت متأكد؟
+                </h3>
+                <p className="text-gray-500 mt-2">
+                  لا يمكن التراجع عن هذا الإجراء بعد تنفيذه.
+                </p>
                 <div className="flex gap-3 mt-6">
                   <button
                     onClick={() => {
@@ -309,7 +350,9 @@ export default function CategoriesPage() {
                     إلغاء
                   </button>
                   <button
-                    onClick={() => (deleteId ? handleDelete(deleteId) : handleDeleteAll())}
+                    onClick={() =>
+                      deleteId ? handleDelete(deleteId) : handleDeleteAll()
+                    }
                     className="flex-1 py-3 bg-red-600 text-white rounded-xl font-semibold shadow-lg shadow-red-100"
                   >
                     تأكيد الحذف

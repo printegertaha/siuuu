@@ -19,7 +19,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-dscreen bg-gray-50 p-8">
       <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-xl p-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-6 border-b pb-4">
           لوحة التحكم
@@ -27,13 +27,17 @@ export default function DashboardPage() {
 
         <div className="space-y-4 text-right" dir="rtl">
           <p className="text-lg">
-            <span className="font-bold text-blue-600">الاسم:</span> {session.user.name}
+            <span className="font-bold text-blue-600">الاسم:</span>{" "}
+            {session.user.name}
           </p>
           <p className="text-lg">
-            <span className="font-bold text-blue-600">البريد الإلكتروني:</span> {session.user.email}
+            <span className="font-bold text-blue-600">البريد الإلكتروني:</span>{" "}
+            {session.user.email}
           </p>
           <p className="text-lg">
-            <span className="font-bold text-blue-600">الصلاحية الحالية (Role):</span>{" "}
+            <span className="font-bold text-blue-600">
+              الصلاحية الحالية (Role):
+            </span>{" "}
             <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold">
               {session.user.role}
             </span>
@@ -47,7 +51,7 @@ export default function DashboardPage() {
           >
             تسجيل الخروج
           </button>
-          
+
           {/* زر يظهر للأدمن فقط كمثال على التحكم بالـ UI */}
           {session.user.role === "admin" && (
             <button className="bg-purple-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-purple-700">

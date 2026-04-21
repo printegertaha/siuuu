@@ -22,7 +22,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`antialiased min-h-screen`}>
+      <body className={`antialiased min-h-dscreen`}>
         <TankStackQuery>
           <AuthProvider>
             <PopUpProvider>

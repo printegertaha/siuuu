@@ -139,7 +139,7 @@ export default function Register() {
 
   return (
     // الحاوية الخارجية
-    <div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center p-4 py-12">
+    <div className="min-h-dscreen bg-[#f8f9fa] flex items-center justify-center p-4 py-12">
       <div className="bg-white w-full max-w-[550px] rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#f1f1f1] p-8 md:p-12">
         <div className="text-center mb-8">
           <h1 className="text-[#1a2b4b] text-3xl md:text-4xl font-bold mb-3">
@@ -150,7 +150,7 @@ export default function Register() {
           </p>
         </div>
 
-        <form className="space-y-4" >
+        <form className="space-y-4">
           <div className="space-y-1.5">
             <label
               className="text-[#1a2b4b] font-semibold text-sm ml-1"
@@ -274,7 +274,6 @@ export default function Register() {
           </p>
         </div>
       </div>
-
     </div>
   );
 }

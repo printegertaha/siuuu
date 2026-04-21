@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".", // 1. لازم نحدد نقطة البداية للمسارات
+    "paths": {
+      "@/*": ["./*"] // 2. بنقوله إن أي حاجة بتبدأ بـ @ تشاور على الـ root
+    },
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts",
+    "**/*.ts",
+    "**/*.tsx"
+, "app/_components/Navbar.tsx"  ],
+  "exclude": ["node_modules"]
+}

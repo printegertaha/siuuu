@@ -2,10 +2,9 @@
 import Image from "next/image";
 import { ads, advantages, topSale } from "../data";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 import ImagesSlider from "./ImagesSlider";
 
-export default function AdsSlider() {
+export default function HeroSection() {
 
 
   return (

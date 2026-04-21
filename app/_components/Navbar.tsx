@@ -14,9 +14,10 @@ import CartSm from "./CartSm";
 export default function Navbar() {
   const pathname = usePathname();
   const { data: userInfo, status: userStatus } = useSession();
-  const [isSideBarVisible, setIsSideBarVisible] = useState(false);
-  const [isCartVisible, setIsCartVisible] = useState(false);
-  const [isNotificationsVisible, setIsNotificationsVisible] = useState(false);
+  const [isSideBarVisible, setIsSideBarVisible] = useState<boolean>(false);
+  const [isCartVisible, setIsCartVisible] = useState<boolean>(false);
+  const [isNotificationsVisible, setIsNotificationsVisible] =
+    useState<boolean>(false);
 
   return (
     <>
@@ -46,7 +47,7 @@ export default function Navbar() {
         <section className="hidden gap-5 items-center sm:flex ">
           <CategoriesSelect />
           {/*         Search                                              */}
-          <div className="relative border-2 rounded-3xl w-full"dir="rtl">
+          <div className="relative border-2 rounded-3xl w-full" dir="rtl">
             <input
               type="text"
               placeholder="لسه مش شغال"
@@ -74,7 +75,7 @@ export default function Navbar() {
               href={
                 pathname === "/login"
                   ? "/register"
-                  : pathname === "register"
+                  : pathname === "/register"
                     ? "/login"
                     : "/my-account"
               }
@@ -95,24 +96,22 @@ export default function Navbar() {
             className="relative max-[250px]:hidden"
             onClick={() => setIsCartVisible((pre) => !pre)}
           >
-            <button className="relative hover:bg-gray-200 w-8 h-8 rounded-[50%] flex items-center justify-center cursor-pointer">
-              <ShoppingBag
-                size={16}
-                className="text-md sm:text-2xl "
-                title="cart"
-              />
-              {/* <span className="absolute -top-1 -right-1 sm:-top-0.5 sm:-right-0.5 bg-red-500 w-2 h-2 sm:w-2 sm:h-2 rounded-[50%] "></span>{" "} */}
+            <button
+              className="relative hover:bg-gray-200 w-8 h-8 rounded-[50%] flex items-center justify-center cursor-pointer"
+              title="cart"
+            >
+              <ShoppingBag size={16} className="text-md sm:text-2xl " />
+              {/*  مخفي فقط لسه مش معمولة لوجيك <span className="absolute -top-1 -right-1 sm:-top-0.5 sm:-right-0.5 bg-red-500 w-2 h-2 sm:w-2 sm:h-2 rounded-[50%] "></span>{" "} */}
             </button>
           </div>
-          <div className="hidden relative max-[220px]:hidden">
-            <Bell
-              size={16}
-              className="text-md sm:text-2xl cursor-pointer"
-              title="Notifications"
-            />
-            {1 === 2 && (
-              <span className="absolute -top-1 -right-1 sm:-top-0.5 sm:-right-0.5 bg-red-500 w-2 h-2 sm:w-2 sm:h-2 rounded-[50%] "></span>
-            )}{" "}
+          <div
+            className="hidden relative max-[220px]:hidden"
+            title="Notifications"
+          >
+            <Bell size={16} className="text-md sm:text-2xl cursor-pointer" />
+            {
+              <span className="hidden absolute -top-1 -right-1 sm:-top-0.5 sm:-right-0.5 bg-red-500 w-2 h-2 sm:w-2 sm:h-2 rounded-[50%] "></span>
+            }{" "}
           </div>
 
           <button
