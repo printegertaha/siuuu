@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".", // 1. لازم نحدد نقطة البداية للمسارات
     "paths": {
       "@/*": ["./*"] // 2. بنقوله إن أي حاجة بتبدأ بـ @ تشاور على الـ root
     },
@@ -13,7 +12,6 @@
     "incremental": true,
     "module": "esnext",
     "esModuleInterop": true,
-    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -29,7 +27,8 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "**/*.ts",
-    "**/*.tsx"
-, "app/_components/Navbar.tsx"  ],
+    "**/*.tsx",
+    "app/_components/Navbar.tsx"
+  ],
   "exclude": ["node_modules"]
 }

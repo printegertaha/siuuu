@@ -4,8 +4,7 @@ import Footer from '../_components/Footer'
 
 export default function Main_layout({children}) {
   return (
-    <div>
-
+    <div className='grid grid-rows-[auto_1fr_auto] min-h-dvh'>
         <Navbar />
           {children}
         <Footer />
