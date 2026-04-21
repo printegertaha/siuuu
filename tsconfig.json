@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./*"] // 2. بنقوله إن أي حاجة بتبدأ بـ @ تشاور على الـ root
     },
