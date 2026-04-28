@@ -16,7 +16,7 @@ export default function CartSm({ isVisible, setIsVisible }) {
     isVisible && (
       <section
         dir="rtl"
-        className="fixed inset-0 top-20 bg-black/20 backdrop-blur-[2px] m h-[calc(100dvh-80px)] w-full z-2000 flex justify-start"
+        className="fixed inset-0 top-20 bg-black/20 backdrop-blur-[2px] min-h-screen w-full z-2000 flex justify-start "
         onClick={() => setIsVisible(false)}
       >
         {/* الحاوية الجانبية - بتفتح من اليمين للشمال في الـ RTL */}

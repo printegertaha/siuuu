@@ -1,18 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePopUp } from "@/app/_context/PopUpContext";
 import { PencilIcon, Trash } from "lucide-react";
 import { useAlertMsg } from "@/app/_context/AlertMsgContext";
+import Loader from "../../(auth)/Loader";
+import { pre } from "motion/react-client";
+import DeleteProduct from "./delete/page";
 
 export default function MyProducts() {
   const apiEndPoint = "/api/user/my-products";
 
-  const { popUp, setPopUp } = usePopUp();
+  const { showPopUp } = usePopUp();
   const [userProducts, setUserProducts] = useState([]);
   const { setAlert } = useAlertMsg();
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isGettingProducts, setIsGettingProducts] = useState(false);
+  const [isGettingProducts, setIsGettingProducts] = useState(true);
+  const abortControllerRef = useRef(null);
 
   // get products
   async function getUserProducts() {
@@ -34,18 +38,36 @@ export default function MyProducts() {
     }
   }
 
-  // delete user
-  async function deleteProductHandler(product) {
+  // delete product
+  async function deleteProduct(product) {
     setIsDeleting(true);
+    abortControllerRef.current = new AbortController();
     try {
       const res = await fetch(`/api/products/${product._id}`, {
         method: "DELETE",
+        signal: abortControllerRef?.current?.signal,
       });
       if (res.ok) {
         setUserProducts((pre) => pre.filter((pro) => pro._id !== product._id));
-        setAlert({ isVisible: true, message: "user deleted", isSuccess: true });
+        setAlert({
+          isVisible: true,
+          message: "تم حذف المنتج",
+          isSuccess: true,
+        });
+      } else if (res.status === 404) {
+        // لو جيت امسح منتج وملوش وجود في داتا بيز خلاص امسحه من هنا 
+        setUserProducts((prev) =>
+          prev.filter((pro) => pro._id !== product._id),
+        );
       }
     } catch (err) {
+      if (err.name === "AbortError") {
+        setAlert({
+          message: "تم الغاء حذف المنتج",
+          isVisible: true,
+          isSuccess: false,
+        });
+      }
       console.log(err);
     } finally {
       setIsDeleting(false);
@@ -54,12 +76,14 @@ export default function MyProducts() {
 
   // run GET data func
   useEffect(() => {
-    async function saveUserProduct() {
-      const theUserProducts = await getUserProducts();
-      setUserProducts(theUserProducts);
-    }
-    saveUserProduct();
+    getUserProducts();
   }, []);
+
+  function DeleteingHandler(product) {
+    showPopUp("حذف المنتج", "بعد حذف المنتج لن تتمكن من استرجاعه.", () =>
+      deleteProduct(product),
+    );
+  }
 
   return (
     <div className="p-4 md:p-8 bg-gray-50 min-h-[calc(100dvh-130px)] ltr text-left">
@@ -77,7 +101,7 @@ export default function MyProducts() {
         <div className="h-[calc(100dvh-350px)] bg-red-600 flex items-center justify-center rounded-2xl">
           <div className="w-10 h-10 border border-t-red-600 rounded-[50%] rotate-360 animate-spin"></div>
         </div>
-      ) : userProducts?.length && !isGettingProducts === 0 ? (
+      ) : userProducts?.length < 1 && !isGettingProducts ? (
         <div className="flex flex-col items-center justify-center min-h-[50dvh] bg-white rounded-3xl shadow-sm border border-dashed border-gray-300">
           <div className="bg-gray-100 p-4 rounded-full mb-4">
             <Trash className="w-12 h-12 text-gray-400" />
@@ -183,7 +207,7 @@ export default function MyProducts() {
                 <button
                   className={`flex items-center gap-2 text-red-500 hover:text-red-700 font-bold text-xs md:text-sm transition-colors px-4 py-2 rounded-lg hover:bg-red-50 ${isDeleting && "cursor-wait"}`}
                   onClick={() => {
-                    deleteProductHandler(product);
+                    DeleteingHandler(product);
                   }}
                   disabled={isDeleting}
                 >
@@ -202,6 +226,16 @@ export default function MyProducts() {
             </div>
           ))}
         </div>
+      )}
+      {isDeleting && (
+        <Loader
+          cancelOperation={() => {
+            if (abortControllerRef?.current) {
+              abortControllerRef.current.abort();
+              setIsDeleting(false);
+            }
+          }}
+        />
       )}
     </div>
   );

@@ -28,7 +28,7 @@ export async function POST(req) {
     return NextResponse.json({data: userData, message: "تم تسجيل المستخدم بنجاح", status: 201 }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { message: "حدث خطأ أثناء التسجيل" },
+      { message: "حدث خطأ في انشاء الحساب" },
       { status: 500 }
     );
   }

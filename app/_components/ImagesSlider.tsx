@@ -36,7 +36,7 @@ export default function ImagesSlider({ images = [] }: Props) {
           });
         }
       }
-    }, 5000);
+    }, 8000);
     return () => clearInterval(autoScroll);
   }, []);
 
@@ -51,7 +51,7 @@ export default function ImagesSlider({ images = [] }: Props) {
 
   return (
     <div
-      className=" imagesSlider flex  h-full overflow-x-auto snap-x snap-mandatory scroll-smooth noScrollBar"
+      className=" imagesSlider flex gap-2 h-full overflow-x-auto snap-x snap-mandatory scroll-smooth noScrollBar"
       ref={sliderRef}
       onScroll={imagesScrollHandler}
       style={{ WebkitOverflowScrolling: "touch" }}

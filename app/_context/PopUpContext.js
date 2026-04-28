@@ -1,21 +1,33 @@
-"use client"
-
-const { createContext, useState, useContext } = require("react");
+// _context/PopUpContext.js
+"use client";
+import PopUp from "../_components/PopUp";
+import { createContext, useState, useContext } from "react";
 
 const PopUpCTX = createContext();
 
-export function PopUpProvider ({children}) {
-    const [popUp, setPopUp] = useState({ask: '', askDtls: '', isVisible: false, isContinue: false, target: ''});
+export function PopUpProvider({ children }) {
+  const [popUp, setPopUp] = useState({
+    isVisible: false,
+    ask: "",
+    askDtls: "",
+    onConfirm: null, // هنخزن الدالة هنا
+  });
 
-    return (
-        <PopUpCTX.Provider value={{popUp, setPopUp}}>
-            {children}
-        </PopUpCTX.Provider>
-    )
+  const showPopUp = (ask, askDtls, onConfirm) => {
+    setPopUp({ isVisible: true, ask, askDtls, onConfirm });
+  };
+
+  const closePopUp = () => {
+    setPopUp({ isVisible: false, ask: "", askDtls: "", onConfirm: null });
+  };
+
+  return (
+    <PopUpCTX.Provider value={{ showPopUp, closePopUp, popUp }}>
+      {children}
+      {popUp.isVisible && <PopUp />}
+      
+    </PopUpCTX.Provider>
+  );
 }
 
-export function usePopUp () {
-    const context = useContext(PopUpCTX);
-    if (!context){ throw new Error({message: 'Pop Up Context Must Be Called Inside Alert Message Provider !'})}
-    return context;
-}
+export const usePopUp = () => useContext(PopUpCTX);

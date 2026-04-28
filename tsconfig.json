@@ -29,7 +29,8 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx",
-    "app/_components/Navbar.tsx"
+    "app/_components/Navbar.tsx",
+    "app/_context/PopUpContext.js"
   ],
   "exclude": ["node_modules"]
 }

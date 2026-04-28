@@ -1,86 +1,78 @@
-"use client";
-import { useQuery } from "@tanstack/react-query";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useAlertMsg } from "@/app/_context/AlertMsgContext";
 import Filter from "@/app/_components/Filter";
 import ProductCard from "@/app/_components/ProductCard";
-import SkeletonProducts from "@/app/skelton/SkeletonProducts";
 import { Product } from "@/app/types";
 
-export default function ProductsByCategory() {
-  const pathname = usePathname();
-  const readOnlySearchParams = useSearchParams();
-  const currentCategory: string = pathname.split("/")[2];
-  const { setAlert } = useAlertMsg();
+interface Props {
+  category_id: string;
+  searchParams?: string;
+}
 
-  // any async func must have return : Promise<type>
-  async function getProducts(): Promise<Product[]> {
-    console.log(`is fetching ${currentCategory} products....`);
-    const sortValue = readOnlySearchParams.get("sort");
+const BASE_URL = "http://localhost:3000";
 
-    const res = await fetch(
-      `/api/products?category=${currentCategory}&sort=${sortValue || ""}`,
-    );
+async function getCategoryProducts(
+  category: string,
+  sort: string,
+): Promise<Product[]> {
+  try {
+    // 1. بناء الـ URL بشكل احترافي عشان نتجنب مشاكل الـ Strings
+    const queryParams = new URLSearchParams({
+      category: category,
+      sort: sort,
+    });
 
-    if (res.status === 500) {
-      setAlert({
-        isVisible: true,
-        message: "err, check the internet and try again",
-        isSuccess: false,
-      });
+    const url = `${BASE_URL}/api/products?${queryParams.toString()}`;
+    // console.log("Fetching from URL:", url); // بص على التيرمينال هنا
+
+    const res = await fetch(url, {
+      cache: "no-store", // الغي الكاش مؤقتاً عشان نتأكد إن الداتا فريش
+    });
+
+    if (!res.ok) {
+      console.error("Fetch failed with status:", res.status);
       return [];
-    } else {
-      const result = await res.json();
-      return result?.data || [];
     }
-  }
 
-  const { data: filteredProducts, isLoading: isGettingProducts } = useQuery<
-    Product[]
-  >({
-    queryKey: [
-      "filteredProducts",
-      currentCategory,
-      readOnlySearchParams.toString(),
-    ],
-    queryFn: getProducts,
-    staleTime: 1000 * 28,
-    refetchInterval: 1000 * 30,
-    refetchOnWindowFocus: true,
-    refetchIntervalInBackground: false,
-    placeholderData: (prev) => prev,
-  });
+    const result = await res.json();
+
+    // 2. تريك الشك في شكل الـ Data:
+    // جرب تطبع الـ result كاملة عشان تشوف هي [{...}] ولا { data: [{...}] }
+    // console.log("Full API Result:", JSON.stringify(result).substring(0, 200));
+
+    // عدل السطر ده بناءً على اللي هتشوفه في الـ Log
+    const products = result?.data || result || [];
+    return Array.isArray(products) ? products : [];
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return [];
+  }
+}
+
+export default async function ProductsByCategory({params, searchParams}) {
+  const {sort: sortValue} = await searchParams;
+  const {category_id: currentCategory} = (await params) || 'latest';
+
+
+  const products = await getCategoryProducts(currentCategory, sortValue);
 
   return (
-    <div className="bg-gray-50 min-h-dscreen py-10">
-      <div className="max-w-7xl mx-auto px-4">
-        <section className="flex flex-row justify-between items-center gap-4 border-b pb-4 mb-10">
-          <h2 className="flex items-center gap-2 min-w-0 flex-1">
-            <span className="inline-block truncate border border-sky-100 bg-sky-50 px-2 py-0.5 text-sm sm:text-md text-sky-500 capitalize tracking-wider rounded-md font-medium">
-              {currentCategory.replaceAll("--", " & ").replaceAll("-", " ")}
-            </span>
-          </h2>
+    <div className="bg-gray-50 min-h-screen py-4 border" dir="rtl">
+      <Filter />
+      <div className="max-w-7xl mx-auto px-4 mt-4">
 
-          <div className="shrink-0">
-            <Filter />
-          </div>
-        </section>
-
-        {filteredProducts && filteredProducts.length > 0 ? (
+        {products.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {filteredProducts.map((p) => (
+            {products.map((p) => (
               <ProductCard product={p} key={p._id} category={currentCategory} />
             ))}
           </div>
-        ) : isGettingProducts ? (
-          <div className="flex flex-wrap gap-4 justify-center">
-            {Array.from({ length: 4 }).map((_, idx) => (
-              <SkeletonProducts key={idx} />
-            ))}
-          </div>
         ) : (
-          <div className="flex items-center justify-center h-[calc(100dvh-220px)] text-red-700">
-            No Products Found
+          <div className="flex flex-col items-center justify-center h-[calc(100vh-220px)]">
+            <p className="text-red-700 font-bold text-xl">
+              لا توجد منتجات حالياً
+            </p>
+            <p className="text-gray-400 text-sm">
+              Category: {currentCategory} | Sort: {sortValue}
+            </p>
           </div>
         )}
       </div>

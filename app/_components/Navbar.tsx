@@ -1,14 +1,14 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { FaBars } from "react-icons/fa6";
+import { FaBars, FaBarsStaggered } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import CategoriesSelect from "./CategoriesSelect";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SideBar from "./SideBar";
-import { Bell, Heart, ShoppingBag } from "lucide-react";
+import { Bell, Heart, ShoppingBag, X } from "lucide-react";
 import CartSm from "./CartSm";
 
 export default function Navbar() {
@@ -18,6 +18,10 @@ export default function Navbar() {
   const [isCartVisible, setIsCartVisible] = useState<boolean>(false);
   const [isNotificationsVisible, setIsNotificationsVisible] =
     useState<boolean>(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <>
@@ -30,7 +34,14 @@ export default function Navbar() {
         className="p-2 grid grid-rows-1 grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-center  gap-x-8 shadow-sm px-[2%] py-5 fixed top-0 z-999 bg-white w-full"
       >
         {/*         logo                                                */}
-        <Link href="/" className=" flex items-center gap-1">
+        <Link
+          href="/"
+          className=" flex items-center gap-1"
+          onClick={() =>
+            pathname === "/" &&
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+          }
+        >
           <Image
             src="/don.jpeg"
             alt="website logo"
@@ -81,7 +92,7 @@ export default function Navbar() {
               }
               className="hidden min-w-max  capitalize min-[315px]:block tracking-wide"
             >
-              {pathname === "/login" ? "register" : "sign in"}
+              {pathname === "/login" ? "انشاء حساب" : "تسجيل الدخول"}
             </Link>
           )}
 
@@ -119,7 +130,7 @@ export default function Navbar() {
             onClick={() => setIsSideBarVisible((pre) => !pre)}
             className="hover:bg-gray-200 w-8 h-8 rounded-[50%] flex items-center justify-center cursor-pointer"
           >
-            <FaBars />
+            {isSideBarVisible ? <X /> : <FaBars />}
           </button>
         </section>
       </nav>

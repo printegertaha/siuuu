@@ -1,8 +1,9 @@
 "use client";
 import CategoriesSelect from "@/app/_components/CategoriesSelect";
 import { useAlertMsg } from "@/app/_context/AlertMsgContext";
-import { X, XCircle } from "lucide-react";
+import { X } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function CreateProduct() {
@@ -18,6 +19,7 @@ export default function CreateProduct() {
     ownerID: "",
   });
   const [gellary, setGellary] = useState([]);
+  const router = useRouter();
 
   async function submitHandler(e) {
     e.preventDefault();
@@ -66,6 +68,7 @@ export default function CreateProduct() {
             ownerID: "",
           });
           setGellary([]);
+          router.push('/my-account/my-products')
         } else {
           console.log(res);
         }
@@ -119,7 +122,6 @@ export default function CreateProduct() {
       });
   }, []);
 
-  console.log(gellary);
 
   return (
     <div className="min-h-dscreen bg-gray-50 p-4 md:p-8 flex justify-center items-center">

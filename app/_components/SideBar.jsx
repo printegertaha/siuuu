@@ -32,7 +32,7 @@ export default function SideBar({ isVisible, setIsVisible }) {
     <>
       {/* الـ Backdrop */}
       <div
-        className={`fixed inset-0 top-[80px] bg-black/30 backdrop-blur-[2px] transition-opacity duration-300 z-[40] ${
+        className={`fixed inset-0 top-[80px] min-h-screen bg-black/30 backdrop-blur-[2px] transition-opacity duration-300 z-[40] ${
           isVisible ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
         onClick={() => setIsVisible(false)}
