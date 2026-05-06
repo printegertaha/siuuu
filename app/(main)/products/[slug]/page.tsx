@@ -30,7 +30,7 @@ async function getProduct(slug: string): Promise<Product | null> {
 
   // نستخدم URL كامل لو بننادي API داخلية، أو ننادي DB مباشرة وده الأفضل في السيرفر
   const res = await fetch(
-    `http://localhost:3000/api/products/${productID}`,
+    `http://siuuu-six.vercel.app/api/products/${productID}`,
     {
       next: { revalidate: 3600 }, // اختيارياً: كاش لمدة ساعة
     },
