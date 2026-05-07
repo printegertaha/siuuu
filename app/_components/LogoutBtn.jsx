@@ -17,12 +17,9 @@ export default function LogoutBtn({ iconValue, textValue = true }) {
   async function logoutHandler() {
     setIsLoading(true);
     try {
-      await signOut({ redirect: false });
-      router.refresh();
-      router.replace("/");
+      await signOut({ callbackUrl: "/" });
     } catch (err) {
       console.log(err);
-      false;
       setIsLoading(false);
     }
   }
