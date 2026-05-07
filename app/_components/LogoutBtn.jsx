@@ -18,7 +18,7 @@ export default function LogoutBtn({ iconValue, textValue = true }) {
     setIsLoading(true);
     try {
       await signOut({ redirect: false });
-      // router.refresh();
+      router.refresh();
       router.replace("/");
     } catch (err) {
       console.log(err);

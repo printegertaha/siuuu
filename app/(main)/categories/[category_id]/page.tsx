@@ -7,7 +7,7 @@ interface Props {
   searchParams?: string;
 }
 
-const BASE_URL = "http://siuuu-six.vercel.app/";
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 async function getCategoryProducts(
   category: string,
