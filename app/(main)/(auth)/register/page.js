@@ -5,14 +5,22 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
-import FormLoading from "../Loader";
 import Loader from "../Loader";
 
 export default function Register() {
   const nameRef = useRef(null);
   const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const passwordRRef = useRef(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    passwordR: "",
+  });
+
+  // password arr to compare
+  const passwordArr = formData?.password?.split("");
+  const passwordRArr = formData?.passwordR?.split("");
+
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordR, setShowPasswordR] = useState(false);
 
@@ -31,10 +39,10 @@ export default function Register() {
   let emailFocusInterval;
 
   function isValid() {
-    const name = nameRef.current.value.trim();
-    const email = emailRef.current.value.trim();
-    const password = passwordRef.current.value;
-    const confirmPassword = passwordRRef.current.value;
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const password = formData.password;
+    const confirmPassword = formData.passwordR;
 
     const isNameValid = nameRegex.test(name);
     const isEmailValid = emailRegex.test(email);
@@ -89,9 +97,9 @@ export default function Register() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            name: nameRef.current.value,
-            email: emailRef.current.value,
-            password: passwordRef.current.value,
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
           }),
         });
 
@@ -103,8 +111,8 @@ export default function Register() {
           setSuccessRegister(true);
           // نبعت طلب تسجيل دخول
           const loginRes = await signIn("credentials", {
-            email: emailRef.current.value,
-            password: passwordRef.current.value,
+            email: formData.email,
+            password: formData.password,
             redirect: false,
           });
 
@@ -209,6 +217,9 @@ export default function Register() {
                 id="fullname"
                 required
                 ref={nameRef}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
               />
             </div>
 
@@ -226,6 +237,9 @@ export default function Register() {
                 id="email"
                 required
                 ref={emailRef}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
               />
             </div>
 
@@ -241,7 +255,10 @@ export default function Register() {
                 placeholder="Enter your password"
                 className="w-full bg-[#f4f7fa] border-none rounded-2xl py-4 pl-6 pr-13 text-[#71717a] focus:ring-2 focus:ring-sky-600 outline-none transition-all placeholder:text-gray-400 mt-1.5 disabled:cursor-not-allowed"
                 id="password"
-                ref={passwordRef}
+                maxLength={14}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
               />
               <button
                 type="button"
@@ -259,21 +276,69 @@ export default function Register() {
               >
                 Confirm Password
               </label>
-              <input
-                type={showPasswordR ? "text" : "password"}
-                placeholder="Retype your password"
-                className="w-full bg-[#f4f7fa] border-none rounded-2xl py-4 px-6 text-[#71717a] focus:ring-2 focus:ring-sky-600 outline-none transition-all placeholder:text-gray-400 mt-1.5"
-                id="re-password"
-                required
-                ref={passwordRRef}
-              />
-              <button
-                type="button"
-                className="absolute top-[50%] right-4 cursor-pointer "
-                onClick={() => setShowPasswordR((prev) => !prev)}
-              >
-                {showPasswordR ? <Eye size={20} /> : <EyeOff size={20} />}
-              </button>
+
+              <div className="relative mt-1.5 flex items-center group">
+                <input
+                  type="text" // نستخدم text دائماً للتحكم في العرض اليدوي
+                  autoComplete="off"
+                  placeholder={formData.passwordR ? "" : "Retype your password"}
+                  className="w-full bg-[#f4f7fa] border-none rounded-2xl py-4 px-6 
+                 text-transparent caret-sky-600 focus:ring-2 focus:ring-sky-600 
+                 outline-none transition-all placeholder:text-gray-400 font-mono text-[16px]"
+                  id="re-password"
+                  required
+                  maxLength={14}
+                  value={formData.passwordR}
+                  onChange={(e) =>
+                    setFormData({ ...formData, passwordR: e.target.value })
+                  }
+                />
+
+                {/* طبقة الـ Spans الاحترافية */}
+                <div className="absolute left-6 inset-y-0 flex items-center pointer-events-none font-mono text-[16px]">
+                  {passwordRArr.map((letter, idx) => {
+                    const isCorrect = letter === passwordArr[idx];
+                    const isSpace = letter === " ";
+
+                    return (
+                      <span
+                        key={idx}
+                        className={`
+              relative flex items-center justify-center transition-all duration-200
+              w-[9.6px] /* العرض الدقيق لحرف المونو */
+              ${showPasswordR ? "text-[16px] font-bold" : ""}
+              ${isCorrect ? "text-green-500" : "text-red-500"}
+            `}
+                      >
+                        {showPasswordR ? (
+                          <>
+                            {letter === " " ? "\u00A0" : letter}
+                            {/* تمييز المسافة الخاطئة بخط سفلي أو خلفية */}
+                            {isSpace && !isCorrect && (
+                              <span className="absolute bottom-2 inset-x-0 h-1 bg-red-500/40 rounded-full animate-pulse" />
+                            )}
+                          </>
+                        ) : (
+                          <span
+                            className={`w-2 h-2 rounded-full transition-transform duration-300 
+                  ${isCorrect ? "bg-green-500 shadow-[0_0_5px_#22c55e]" : "bg-red-500 shadow-[0_0_5px_#ef4444]"}
+                  scale-110
+                `}
+                          />
+                        )}
+                      </span>
+                    );
+                  })}
+                </div>
+
+                <button
+                  type="button"
+                  className="absolute right-4 text-gray-400 hover:text-sky-600 transition-colors cursor-pointer"
+                  onClick={() => setShowPasswordR((prev) => !prev)}
+                >
+                  {showPasswordR ? <Eye size={20} /> : <EyeOff size={20} />}
+                </button>
+              </div>
             </div>
 
             <button
@@ -322,7 +387,11 @@ export default function Register() {
           </div>
         </fieldset>
       </div>
-      {isLoading && <Loader cancelOperation={successRegister ? cancelLoginHandler : undefined} />}
+      {isLoading && (
+        <Loader
+          cancelOperation={successRegister ? cancelLoginHandler : undefined}
+        />
+      )}
     </div>
   );
 }
