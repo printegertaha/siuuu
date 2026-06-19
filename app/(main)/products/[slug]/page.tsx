@@ -1,6 +1,7 @@
 import { MapPin, Clock } from "lucide-react";
 import { Product } from "@/app/types/product";
 import ProductImagesSlider from "./ProductImagesSlider";
+import {apiUrl} from '@/lib/constans'
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -30,7 +31,7 @@ async function getProduct(slug: string): Promise<Product | null> {
 
   // نستخدم URL كامل لو بننادي API داخلية، أو ننادي DB مباشرة وده الأفضل في السيرفر
   const res = await fetch(
-    `http://siuuu-six.vercel.app/api/products/${productID}`,
+    `${apiUrl}/products/${productID}`,
     {
       next: { revalidate: 3600 }, // اختيارياً: كاش لمدة ساعة
     },
@@ -143,9 +144,7 @@ export default async function ProductDetailsPage({ params }: Props) {
         </main>
       </div>
 
-      <p className="fixed top-1/2 left-1/2 opacity-20 -translate-1/2 z-2000 text-red-600">
-        تصميم تجريبي يا ليفة
-      </p>
+     
     </div>
   );
 }
